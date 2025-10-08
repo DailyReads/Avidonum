@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Literadia</title>
+  <link rel ="stylesheet" href ="style.css">
+  <style>
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+  font-family: 'Segoe UI', sans-serif; 
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden; /* cegah scroll horizontal */
+}
+
+body { 
+  background: #ffffff; 
+  color: #000; 
+}
+
+/* ========== HEADER ========== */
+header {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #d4a373, #ccd5ae);
+  color: #fff;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  header {
+    text-align: left;
+    padding: 40px 60px;
+  }
+  header h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+}
+
+/* ========== HERO SECTION ========== */
+.hero {
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('library.jpeg');
+  background-size: cover;
+  background-position: center;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 20px;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Desktop Hero - Posisi countdown & button di bawah */
+@media (min-width: 1024px) {
+  .hero {
+    height: 500px;
+  }
+
+  .hero-content {
+    gap: 20px;
+  }
+
+  .hero-content h1 {
+    font-size: 3.5rem;
+  }
+
+  .hero-content p {
+    font-size: 1.5rem;
+  }
+}
+
+/* ========== COUNTDOWN BOX ========== */
+.countdown-box {
+  display: inline-block;
+  text-align: center;
+  background: rgba(255,255,255,0.1);
+  padding: 20px 30px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.countdown-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.time-box {
+  background: rgba(255,255,255,0.25);
+  padding: 10px 15px;
+  border-radius: 10px;
+  min-width: 60px;
+  text-align: center;
+  color: white;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  border: 2px solid rgba(255,255,255,0.3);
+  transition: all 0.3s ease;
+}
+
+.time-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  background: rgba(255,255,255,0.35);
+}
+
+.time-box span {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  margin-bottom: 5px;
+}
+
+.time-box small {
+  font-size: 0.75rem;
+  opacity: 0.9;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Desktop countdown - lebih besar & mewah */
+@media (min-width: 1024px) {
+  .countdown-box {
+    padding: 30px 60px;
+    border-radius: 25px;
+  }
+
+  .countdown-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .countdown {
+    gap: 20px;
+  }
+
+  .time-box {
+    min-width: 100px;
+    padding: 20px 25px;
+    border-radius: 15px;
+    border: 3px solid rgba(255,255,255,0.4);
+  }
+
+  .time-box span {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+  }
+
+  .time-box small {
+    font-size: 0.9rem;
+  }
+}
+
+/* ========== BUTTONS ========== */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: bold;
+}
+
+.hero .btn-primary {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid white;
+  padding: 0.8rem 2rem;
+  backdrop-filter: blur(5px);
+  font-size: 1rem;
+}
+
+.hero .btn-primary:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero .btn-primary:active {
+  transform: translateY(0);
+}
+
+@media (min-width: 1024px) {
+  .hero .btn-primary {
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* ========== SEARCH CONTAINER ========== */
+.search-container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.search-box {
+  position: relative;
+  width: 100%;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 12px 40px 12px 40px;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
+}
+
+#searchInput:focus {
+  border-color: #d4a373;
+  box-shadow: 0 0 10px rgba(212, 163, 115, 0.3);
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  pointer-events: none;
+}
+
+.search-clear {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+  display: none;
+  transition: 0.2s;
+}
+
+.search-clear:hover {
+  color: #333;
+}
+
+/* ========== CART BUTTON ========== */
+.cart-btn { 
+  background: none; 
+  border: none; 
+  cursor: pointer; 
+  position: fixed; 
+  top: 20px; 
+  right: 20px; 
+  z-index: 999;
+  font-size: 24px;
+}
+
+.cart-count {
+  position: absolute; 
+  top: -8px; 
+  right: -8px;
+  background: red; 
+  color: white; 
+  border-radius: 50%;
+  width: 20px; 
+  height: 20px; 
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  font-size: 12px; 
+  font-weight: bold;
+  display: none;
+}
+
+/* ========== TABS ========== */
+.tabs {
+  background: white;
+  padding: 16px 0;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.tabs-container {
+  display: flex;
+  gap: 8px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 24px;
+  background: #f8f9fa;
+  border: 1px solid #e1e5e9;
+  border-radius: 25px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  color: #666;
+}
+
+.tab.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+  box-shadow: 0 2px 8px rgba(0,123,255,0.2);
+}
+
+.tab:hover:not(.active) {
+  background: #e9ecef;
+}
+
+/* ========== SECTION ========== */
+.section { 
+  padding: 40px 20px; 
+  max-width: 1000px; 
+  margin: auto; 
+}
+
+.section h2 { 
+  font-size: 24px; 
+  margin-bottom: 20px; 
+  text-align: center; 
+}
+
+/* ========== PRODUCTS ========== */
+.product-grid { 
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 20px; 
+}
+
+@media (min-width: 768px) {
+  .product-grid { 
+    grid-template-columns: repeat(4, 1fr); 
+  }
+}
+
+.product-card {
+  position: relative;
+  background: #fff; 
+  border-radius: 15px; 
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+  padding: 15px;
+  text-align: center; 
+  transition: 0.3s;
+}
+
+.product-card:hover { 
+  transform: translateY(-2px); 
+}
+
+.product-card.hidden { 
+  display: none; 
+}
+
+.product-card img { 
+  width: 100%; 
+  height: 180px; 
+  object-fit: cover; 
+  border-radius: 10px; 
+}
+
+.product-name { 
+  font-size: 16px; 
+  font-weight: 600; 
+  margin: 10px 0; 
+}
+
+.product-price { 
+  font-size: 16px; 
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+.product-price s {
+  color: #000;
+  opacity: 0.6;
+  font-size: 15px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.product-price strong {
+  color: #000;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.product-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #d4a373, #ccd5ae);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.product-badge::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, #d4a373, #ccd5ae);
+  border-radius: 14px;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.add-btn { 
+  background: #000; 
+  color: #fff; 
+  border: none; 
+  padding: 8px 14px; 
+  border-radius: 20px; 
+  cursor: pointer; 
+  font-size: 14px; 
+}
+
+.add-btn:hover { 
+  background: #444; 
+}
+
+/* ========== NO RESULTS ========== */
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  display: none;
+}
+
+.no-results h3 { 
+  font-size: 24px; 
+  margin-bottom: 10px; 
+}
+
+.no-results p { 
+  font-size: 16px; 
+}
+
+/* ========== CART SECTION ========== */
+.cart-section { 
+  display: none; 
+  background: #f8f9fa;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;  
+  z-index: 1000;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 1024px) {
+  .cart-section {
+    width: 60%;
+    height: auto;
+    max-height: 90vh;
+    top: 5%;
+    bottom: auto;
+    left: auto;
+    right: 5%;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+
+  .cart-content {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+}
+
+.cart-header {
+  background: linear-gradient(135deg, #d4a373, #ccd5ae);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.cart-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cart-header p {
+  margin-top: 5px;
+  opacity: 0.9;
+  font-size: 16px;
+}
+
+.close-cart {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.close-cart:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.cart-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ========== CUSTOMER FORM ========== */
+.customer-form {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.customer-form h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #333;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+@media (min-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.input-field { 
+  width: 100%; 
+  padding: 12px 15px; 
+  border: 2px solid #e0e0e0; 
+  border-radius: 10px; 
+  font-size: 16px; 
+  transition: 0.3s;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: #d4a373;
+  box-shadow: 0 0 5px rgba(212, 163, 115, 0.3);
+}
+
+.promo-section {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.promo-section .input-field {
+  flex: 1;
+}
+
+.promo-btn {
+  background: #d4a373;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+
+.promo-btn:hover {
+  background: #c49668;
+}
+
+.promo-message {
+  font-size: 14px;
+  color: red;
+  margin-left: 8px;
+}
+
+@media (max-width: 768px) {
+  .promo-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .promo-message {
+    order: 3;
+    margin-left: 0;
+    text-align: center;
+    width: 100%;
+    font-size: 13px;
+  }
+}
+
+/* ========== RECEIPT ========== */
+.receipt-container { 
+  background: #fff; 
+  border-radius: 15px; 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+  overflow: hidden;
+  margin-top: auto;
+}
+
+.receipt-header { 
+  background: linear-gradient(135deg, #000, #333); 
+  padding: 20px; 
+  color: white; 
+  text-align: center; 
+}
+
+.receipt-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.receipt-subtitle {
+  opacity: 0.8;
+  font-size: 16px;
+}
+
+.receipt-items { 
+  padding: 20px; 
+  min-height: 200px; 
+}
+
+.receipt-item { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  padding: 15px 0; 
+  border-bottom: 1px dashed #e0e0e0; 
+}
+
+.receipt-item:last-child {
+  border-bottom: none;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-name {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.item-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.qty-btn { 
+  background: #000; 
+  color: #fff; 
+  border: none; 
+  border-radius: 50%; 
+  width: 28px; 
+  height: 28px; 
+  font-weight: bold; 
+  cursor: pointer; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.qty-btn:hover {
+  background: #333;
+}
+
+.quantity {
+  min-width: 30px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.item-price {
+  font-weight: 700;
+  color: #333;
+  min-width: 80px;
+  text-align: right;
+}
+
+.receipt-summary {
+  border-top: 2px solid #e0e0e0;
+  padding: 20px;
+  background: #f8f9fa;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.summary-row.total {
+  font-size: 20px;
+  font-weight: 700;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+
+.checkout-btn {
+  background: #d4a373;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+
+.checkout-btn:hover {
+  background: #c49668;
+}
+
+.checkout-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* ========== EMPTY CART ========== */
+.empty-cart {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.empty-cart-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+.empty-cart h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.empty-cart p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.continue-shopping {
+  background: #d4a373;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.continue-shopping:hover {
+  background: #c49668;
+}
+
+/* ========== FOOTER ========== */
+footer { 
+  background: #ccd5ae; 
+  padding: 25px; 
+  text-align: left; 
+  margin-top: 40px; 
+  border-top-left-radius: 40px; 
+  border-top-right-radius: 40px; 
+}
+
+footer h2 { 
+  font-size: 20px; 
+  margin-bottom: 10px; 
+}
+
+footer p { 
+  margin: 5px 0; 
+  font-size: 14px; 
+}
+
+.footer-content {
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.footer-column {
+  flex: 1 1 45%;
+  min-width: 150px;
+}
+
+@media (max-width: 480px) {
+  .footer-column {
+    flex: 1 1 100%;
+  }
+}
+  </style>
+</head>
+<body>
+
+    <!-- Cart Button -->
+    <button class="cart-btn" onclick="toggleCart()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                        </svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+      <!-- Main Section -->
+  <div class="main-section"></div>
+
+    <!-- Header -->
+    <header>
+      <h1>Literadia</h1>
+    </header>
+        <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Literadia</h1>
+            <p>Your one-stop destination for books and library services</p>
+<div class="countdown-box">
+  <div class="countdown-title">🎉 Discount 20%</div>
+  <div id="countdown" class="countdown">
+    <div class="time-box">
+      <span id="days">00</span>
+      <small>Days</small>
+    </div>
+    <div class="time-box">
+      <span id="hours">00</span>
+      <small>Hours</small>
+    </div>
+    <div class="time-box">
+      <span id="minutes">00</span>
+      <small>Min</small>
+    </div>
+    <div class="time-box">
+      <span id="seconds">00</span>
+      <small>Sec</small>
+    </div>
+  </div>
+</div>
+            <a href="#books-section" class="btn btn-primary" id="shop-now">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Search Bar -->
+<div class="search-container">
+  <div class="search-box">
+    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 
+               16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 
+               5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 
+               4.99L20.49 19l-4.99-5zm-6 0C7.01 14 
+               5 11.99 5 9.5S7.01 5 9.5 5 
+               14 7.01 14 9.5 11.99 14 9.5 14z"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Search books" oninput="searchBooks()">
+    <button id="searchClear" class="search-clear" onclick="clearSearch()">×</button>
+  </div>
+</div>
+    <section class="tabs">
+        <div class="container">
+<div class="tabs-container">
+    <div class="tab active" onclick="switchTab('all')" id="allTab">All</div>
+    <div class="tab" onclick="switchTab('books')" id="booksTab">Book</div>
+    <div class="tab" onclick="switchTab('summary')" id="summaryTab">Summary</div>
+</div>
+        </div>
+    </section>
+    
+<!-- === DISPLAY KHUSUS DISKON === -->
+<div class="section" id="discountSection">
+  <h2>Promo Spesial</h2>
+  <div class="product-grid" id="discountGrid"></div>
+</div>
+    <!-- Products Section -->
+    <div class="section">
+      <h2>Koleksi Buku Terbaru</h2>
+      <div class="product-grid" id="productGrid">
+        <!-- Products will be loaded here -->
+      </div>
+      <div class="no-results" id="noResults">
+        <h3>Tidak ada hasil ditemukan</h3>
+        <p>Coba kata kunci yang berbeda</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+        <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About Us</h3>
+                    <p>Literadia is a modern library and bookstore dedicated to promoting reading culture and providing access to knowledge for everyone.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li>Phone: +62 823-8205-2250</li>
+                        <li>Email: literadia1@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Literadia Library & Bookstore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+  <!-- Cart Section -->
+  <div class="cart-section" id="cartSection">
+    <div class="cart-header">
+      <button class="close-cart" onclick="toggleCart()">×</button>
+      <h1>Your Cart</h1>
+      <p>Review your items and proceed to checkout</p>
+    </div>
+    
+    <div class="cart-content">
+      <div class="customer-form">
+        <h3> Customer Information</h3>
+        <div class="form-row">
+          <input type="text" class="input-field" placeholder="Your Name *" id="customerName">
+          <input type="email" class="input-field" placeholder="Your Email *" id="customerEmail">
+        </div>
+        <div class="promo-section">
+          <input type="text" class="input-field" placeholder="Promo Code (Optional)" id="promoCode">
+          <button class="promo-btn" onclick="applyPromo()">Apply</button>
+          <div id="promoMessage" style="margin-top:10px; font-size:14px; color:green;"></div>
+        </div>
+      </div>
+      
+      <div class="receipt-container">
+        <div class="receipt-header">
+          <div class="receipt-title"> Order Summary</div>
+          <div class="receipt-subtitle">Literadia Bookstore</div>
+        </div>
+        
+        <div class="receipt-items" id="cartItems">
+          <div class="empty-cart">
+            <div class="empty-cart-icon">🛒</div>
+            <h3>Your cart is empty</h3>
+            <p>Add some books to get started!</p>
+            <button class="continue-shopping" onclick="toggleCart()">Continue Shopping</button>
+          </div>
+        </div>
+        
+        <div class="receipt-summary">
+          <div class="summary-row total">
+            <span>Total Amount</span>
+            <span id="totalAmount">Rp 0</span>
+          </div>
+          <button class="checkout-btn" onclick="sendToWhatsApp()" id="checkoutBtn" disabled>
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ================================
+// DATA PRODUK
+// ================================
+const books = [
+  { id: 1, name: "Laskar Pelangi", price: 85000, image: "https://via.placeholder.com/150", category: "Physical" },
+  { id: 2, name: "Bumi Manusia", price: 92000, image: "https://via.placeholder.com/150", category: "Physical" },
+  { id: 3, name: "Perahu Kertas", price: 78000, image: "https://via.placeholder.com/150", category: "Physical" },
+  { id: 4, name: "Negeri 5 Menara", price: 88000, image: "https://via.placeholder.com/150", category: "Physical" },
+];
+
+const summaryBooks = [
+  { id: 101, name: "Laskar Pelangi (Summary)", price: 25000, image: "https://via.placeholder.com/150", category: "Summary" },
+  { id: 102, name: "Bumi Manusia (Summary)", price: 27000, image: "https://via.placeholder.com/150", category: "Summary" },
+  { id: 103, name: "Perahu Kertas (Summary)", price: 22000, image: "https://via.placeholder.com/150", category: "Summary" },
+  { id: 104, name: "Negeri 5 Menara (Summary)", price: 24000, image: "https://via.placeholder.com/150", category: "Summary" },
+];
+
+// Gabungkan semua produk
+const products = [...books, ...summaryBooks];
+
+// ================================
+// CONFIG DISKON
+// ================================
+const discountRate = 20; // 20% diskon
+const discountProducts = [1, 2, 101]; // ID produk yang dapat diskon
+
+// ================================
+// GLOBAL VARIABLES
+// ================================
+let cart = [];
+let currentDiscount = 0;
+let activeTab = 'all';
+let appliedPromo = null;
+
+const promoList = {
+  "DISKON20": { type: "percent", value: 20 },
+  "GAG123": { type: "percent", value: 5 }
+};
+
+// ================================
+// COUNTDOWN TIMER
+// ================================
+const targetDate = new Date("2025-10-20T14:12:00").getTime();
+let timer = null;
+
+function updateCountdown() {
+  const now = new Date().getTime();
+  const distance = targetDate - now;
+
+  if (distance < 0) {
+    const countdownTitle = document.querySelector(".countdown-title");
+    const countdownElement = document.getElementById("countdown");
+    
+    if (countdownTitle) countdownTitle.textContent = "Promo berakhir 😢";
+    if (countdownElement) countdownElement.style.display = "none";
+    
+    hideDiscountDisplay();
+    if (timer) clearInterval(timer);
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  const daysEl = document.getElementById("days");
+  const hoursEl = document.getElementById("hours");
+  const minutesEl = document.getElementById("minutes");
+  const secondsEl = document.getElementById("seconds");
+
+  if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
+  if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
+  if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
+  if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+}
+
+// ================================
+// LOAD PRODUK DISKON
+// ================================
+function loadDiscountProducts() {
+  const grid = document.getElementById("discountGrid");
+  if (!grid) return;
+  
+  const filtered = products.filter(p => discountProducts.includes(p.id));
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<p style="text-align:center; color:#666;">Tidak ada produk diskon tersedia</p>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(product => {
+    const discountPrice = Math.round(product.price * (1 - discountRate / 100));
+    return `
+      <div class="product-card" data-name="${product.name.toLowerCase()}">
+        <img src="${product.image}" alt="${product.name}">
+        <div class="product-name">${product.name}</div>
+        <div class="product-price">
+          <s>Rp ${product.price.toLocaleString('id-ID')}</s> 
+          <strong style="color:black;">Rp ${discountPrice.toLocaleString('id-ID')}</strong>
+        </div>
+        <span class="product-badge">Diskon ${discountRate}%</span>
+        <button class="add-btn" onclick="addToCart(${product.id})" id="promoBtn-${product.id}">Add to Cart</button>
+      </div>
+    `;
+  }).join('');
+}
+
+// ================================
+// HIDE DISKON DISPLAY
+// ================================
+function hideDiscountDisplay() {
+  const discountSection = document.getElementById("discountSection");
+  if (discountSection) {
+    discountSection.style.display = "none";
+  }
+  
+  // Disable promo buttons
+  discountProducts.forEach(id => {
+    const btn1 = document.getElementById(`promoBtn-${id}`);
+    const btn2 = document.getElementById(`addBtn-${id}`);
+    if (btn1) {
+      btn1.disabled = true;
+      btn1.textContent = "Expired";
+      btn1.style.background = "#ccc";
+    }
+    if (btn2) {
+      btn2.disabled = true;
+      btn2.textContent = "Expired";
+      btn2.style.background = "#ccc";
+    }
+  });
+}
+
+// ================================
+// LOAD PRODUK UTAMA
+// ================================
+function loadProducts() {
+  const grid = document.getElementById('productGrid');
+  if (!grid) return;
+  
+  let data = [];
+  
+  if (activeTab === "books") {
+    data = books;
+  } else if (activeTab === "summary") {
+    data = summaryBooks;
+  } else {
+    data = products; // for "All" tab
+  }
+
+  if (data.length === 0) {
+    grid.innerHTML = '<p style="text-align:center; color:#666;">Tidak ada produk tersedia</p>';
+    return;
+  }
+
+  grid.innerHTML = data.map(product => {
+    const isDiscount = discountProducts.includes(product.id);
+    const discountPrice = isDiscount
+      ? Math.round(product.price * (1 - discountRate / 100))
+      : product.price;
+
+    return `
+      <div class="product-card" data-name="${product.name.toLowerCase()}">
+        <img src="${product.image}" alt="${product.name}" loading="lazy">
+        <div class="product-name">${product.name}</div>
+        <div class="product-price">
+          ${isDiscount 
+            ? `<s>Rp ${product.price.toLocaleString('id-ID')}</s> 
+               <strong style="color:black;">Rp ${discountPrice.toLocaleString('id-ID')}</strong>`
+            : `Rp ${product.price.toLocaleString('id-ID')}`
+          }
+        </div>
+        ${isDiscount 
+          ? `<span class="product-badge">Diskon ${discountRate}%</span>` 
+          : `<span class="product-badge">${product.category}</span>`
+        }
+        <button class="add-btn" onclick="addToCart(${product.id})" id="addBtn-${product.id}">Add to Cart</button>
+      </div>
+    `;
+  }).join('');
+}
+
+// ================================
+// SEARCH FUNCTIONALITY
+// ================================
+function searchBooks() {
+  const searchInput = document.getElementById('searchInput');
+  if (!searchInput) return;
+  
+  const query = searchInput.value.toLowerCase();
+  const cards = document.querySelectorAll('.product-card');
+  const clearBtn = document.getElementById('searchClear');
+  const noResults = document.getElementById('noResults');
+  let hasResults = false;
+
+  cards.forEach(card => {
+    const name = card.getAttribute('data-name');
+    if (name && name.includes(query)) {
+      card.classList.remove('hidden');
+      hasResults = true;
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+
+  if (clearBtn) clearBtn.style.display = query ? 'block' : 'none';
+  if (noResults) noResults.style.display = (!hasResults && query) ? 'block' : 'none';
+}
+
+function clearSearch() {
+  const searchInput = document.getElementById('searchInput');
+  const clearBtn = document.getElementById('searchClear');
+  const noResults = document.getElementById('noResults');
+  
+  if (searchInput) searchInput.value = '';
+  if (clearBtn) clearBtn.style.display = 'none';
+  if (noResults) noResults.style.display = 'none';
+  
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.classList.remove('hidden');
+  });
+}
+
+// ================================
+// TAB SWITCHING
+// ================================
+function switchTab(tab) {
+  activeTab = tab;
+  
+  const allTab = document.getElementById('allTab');
+  const booksTab = document.getElementById('booksTab');
+  const summaryTab = document.getElementById('summaryTab');
+  
+  if (allTab) allTab.classList.toggle('active', tab === 'all');
+  if (booksTab) booksTab.classList.toggle('active', tab === 'books');
+  if (summaryTab) summaryTab.classList.toggle('active', tab === 'summary');
+  
+  loadProducts();
+  clearSearch();
+}
+
+// ================================
+// CART FUNCTIONALITY
+// ================================
+function addToCart(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+  
+  // Cek apakah produk mendapat diskon
+  const isDiscount = discountProducts.includes(productId);
+  const finalPrice = isDiscount 
+    ? Math.round(product.price * (1 - discountRate / 100))
+    : product.price;
+  
+  const existingItem = cart.find(item => item.id === productId);
+
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({ 
+      ...product, 
+      quantity: 1,
+      finalPrice: finalPrice
+    });
+  }
+
+  updateCartDisplay();
+  
+  // Show notification
+  showNotification(`${product.name} added to cart!`);
+}
+
+function updateQuantity(productId, change) {
+  const item = cart.find(item => item.id === productId);
+  if (item) {
+    item.quantity += change;
+    if (item.quantity <= 0) {
+      cart = cart.filter(item => item.id !== productId);
+    }
+  }
+  updateCartDisplay();
+}
+
+function updateCartDisplay() {
+  const cartCount = document.getElementById('cartCount');
+  const cartItems = document.getElementById('cartItems');
+  const totalAmount = document.getElementById('totalAmount');
+  const checkoutBtn = document.getElementById('checkoutBtn');
+
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const subtotal = cart.reduce((sum, item) => sum + ((item.finalPrice || item.price) * item.quantity), 0);
+  const total = subtotal - (subtotal * currentDiscount / 100);
+
+  // Update cart count
+  if (cartCount) {
+    if (totalItems > 0) {
+      cartCount.textContent = totalItems;
+      cartCount.style.display = 'flex';
+    } else {
+      cartCount.style.display = 'none';
+    }
+  }
+
+  // Update cart items
+  if (cartItems) {
+    if (cart.length === 0) {
+      cartItems.innerHTML = `
+        <div class="empty-cart">
+          <div class="empty-cart-icon">🛒</div>
+          <h3>Your cart is empty</h3>
+          <p>Add some books to get started!</p>
+          <button class="continue-shopping" onclick="toggleCart()">Continue Shopping</button>
+        </div>
+      `;
+      if (checkoutBtn) checkoutBtn.disabled = true;
+    } else {
+      cartItems.innerHTML = cart.map(item => {
+        const itemPrice = item.finalPrice || item.price;
+        return `
+          <div class="receipt-item">
+            <div class="item-info">
+              <div class="item-name">${item.name}</div>
+              <div class="item-controls">
+                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                <span class="quantity">${item.quantity}</span>
+                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+              </div>
+            </div>
+            <div class="item-price">Rp ${(itemPrice * item.quantity).toLocaleString('id-ID')}</div>
+          </div>
+        `;
+      }).join('');
+      if (checkoutBtn) checkoutBtn.disabled = false;
+    }
+  }
+
+  if (totalAmount) {
+    totalAmount.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+  }
+}
+
+function toggleCart() {
+  const cartSection = document.getElementById('cartSection');
+  const mainSection = document.querySelector('.main-section');
+  
+  if (!cartSection) return;
+  
+  if (cartSection.style.display === 'block') {
+    cartSection.style.display = 'none';
+    if (mainSection) mainSection.style.display = 'block';
+    document.body.style.overflow = 'auto';
+  } else {
+    cartSection.style.display = 'block';
+    if (mainSection) mainSection.style.display = 'none';
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+// ================================
+// PROMO CODE
+// ================================
+function applyPromo() {
+  const promoCodeInput = document.getElementById("promoCode");
+  const promoMessage = document.getElementById("promoMessage");
+  
+  if (!promoCodeInput || !promoMessage) return;
+  
+  let code = promoCodeInput.value.trim().toUpperCase();
+
+  if (appliedPromo) {
+    promoMessage.style.color = "red";
+    promoMessage.textContent = "Promo sudah digunakan.";
+    return;
+  }
+
+  if (promoList[code]) {
+    let promo = promoList[code];
+    appliedPromo = { code, ...promo };
+    currentDiscount = promo.value;
+
+    promoMessage.style.color = "green";
+    promoMessage.textContent = `Promo ${code} berhasil diterapkan! Diskon ${promo.value}%`;
+
+    updateCartDisplay();
+  } else if (code) {
+    promoMessage.style.color = "red";
+    promoMessage.textContent = "Kode promo tidak valid.";
+  }
+
+  promoCodeInput.value = '';
+}
+
+// ================================
+// WHATSAPP CHECKOUT
+// ================================
+function sendToWhatsApp() {
+  const customerName = document.getElementById('customerName');
+  const customerEmail = document.getElementById('customerEmail');
+  
+  if (!customerName || !customerEmail) return;
+  
+  const name = customerName.value.trim();
+  const email = customerEmail.value.trim();
+
+  if (!name || !email) {
+    alert('Please fill in your name and email');
+    return;
+  }
+
+  // Validasi email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    alert('Please enter a valid email address');
+    return;
+  }
+
+  const subtotal = cart.reduce((sum, item) => sum + ((item.finalPrice || item.price) * item.quantity), 0);
+  const total = subtotal - (subtotal * currentDiscount / 100);
+
+  let message = `*LITERADIA BOOKSTORE ORDER*\n\n`;
+  message += `Customer: ${name}\n`;
+  message += `Email: ${email}\n\n`;
+  message += `*ORDER DETAILS:*\n`;
+  
+  cart.forEach(item => {
+    const itemPrice = item.finalPrice || item.price;
+    message += `• ${item.name}\n  Qty: ${item.quantity} x Rp ${itemPrice.toLocaleString('id-ID')}\n  Subtotal: Rp ${(itemPrice * item.quantity).toLocaleString('id-ID')}\n\n`;
+  });
+
+  if (currentDiscount > 0) {
+    message += `Subtotal: Rp ${subtotal.toLocaleString('id-ID')}\n`;
+    message += `Discount (${currentDiscount}%): -Rp ${(subtotal * currentDiscount / 100).toLocaleString('id-ID')}\n`;
+  }
+
+  message += `*TOTAL: Rp ${total.toLocaleString('id-ID')}*\n\n`;
+  message += `Thank you for your order! `;
+
+  const whatsappNumber = '082382052250';
+  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  
+  // buka WhatsApp
+  window.open(whatsappURL, '_blank');
+
+  // reset cart setelah 1 detik
+  setTimeout(() => {
+    cart = [];
+    appliedPromo = null;
+    currentDiscount = 0;
+    updateCartDisplay();
+    toggleCart();
+    customerName.value = '';
+    customerEmail.value = '';
+    const promoMessage = document.getElementById('promoMessage');
+    if (promoMessage) promoMessage.textContent = '';
+  }, 1000);
+}
+
+// ================================
+// SCROLL TO PRODUCTS
+// ================================
+function scrollToProducts() {
+  const section = document.querySelector('.section');
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+// ================================
+// INITIALIZE
+// ================================
+document.addEventListener('DOMContentLoaded', function() {
+  // Set default tab
+  activeTab = "all";
+  
+  // Load products
+  loadProducts();
+  loadDiscountProducts();
+  updateCartDisplay();
+  updateCountdown();
+  
+  // Start countdown timer
+  timer = setInterval(updateCountdown, 1000);
+
+  // Set active tab
+  const allTab = document.getElementById('allTab');
+  const booksTab = document.getElementById('booksTab');
+  const summaryTab = document.getElementById('summaryTab');
+  
+  if (allTab) allTab.classList.add('active');
+  if (booksTab) booksTab.classList.remove('active');
+  if (summaryTab) summaryTab.classList.remove('active');
+  
+  // Shop now button
+  const shopNowBtn = document.getElementById("shop-now");
+  if (shopNowBtn) {
+    shopNowBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      const target = document.getElementById("discountGrid");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  }
+  
+  // Close cart when clicking outside
+  const cartSection = document.getElementById('cartSection');
+  if (cartSection) {
+    cartSection.addEventListener('click', function(e) {
+      if (e.target === cartSection) {
+        toggleCart();
+      }
+    });
+  }
+  
+  // Enter key for promo code
+  const promoCodeInput = document.getElementById("promoCode");
+  if (promoCodeInput) {
+    promoCodeInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        applyPromo();
+      }
+    });
+  }
+});
+
+// ================================
+// CLEANUP ON PAGE UNLOAD
+// ================================
+window.addEventListener('beforeunload', function() {
+  if (timer) {
+    clearInterval(timer);
+  }
+});
+  </script>
+</body>
+</html>
