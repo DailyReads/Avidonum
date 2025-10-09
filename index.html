@@ -1424,8 +1424,6 @@ function updateCartDisplay() {
     }
   }
 
-  // Update cart items
-  if (cartItems) {
     // Ganti bagian ini di function updateCartDisplay()
 if (cart.length === 0) {
   cartItems.innerHTML = `
@@ -1462,8 +1460,6 @@ if (cart.length === 0) {
   }).join('');
   if (checkoutBtn) checkoutBtn.disabled = false;
 }
-  }
-
   if (totalAmount) {
     totalAmount.textContent = `Rp ${total.toLocaleString('id-ID')}`;
   }
@@ -1665,6 +1661,7 @@ window.addEventListener('beforeunload', function() {
 </body>
 
 </html>
+
 
 
 
