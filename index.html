@@ -889,11 +889,11 @@ footer p {
 
     <!-- Header -->
     <header>
-      <h1>Literadia</h1>
+      <h1>Avidonum</h1>
     </header>
         <section class="hero">
         <div class="hero-content">
-            <h1>Welcome to Literadia</h1>
+            <h1>Welcome to Avidonum</h1>
             <p>Your one-stop destination for books and library services</p>
 <div class="countdown-box">
   <div class="countdown-title">🎉 Discount 20%</div>
@@ -939,7 +939,7 @@ footer p {
         <div class="container">
 <div class="tabs-container">
     <div class="tab active" onclick="switchTab('all')" id="allTab">All</div>
-    <div class="tab" onclick="switchTab('Keychain')" id="booksTab">Keychain</div>
+    <div class="tab" onclick="switchTab('keychain')" id="booksTab">Keychain</div>
     <div class="tab" onclick="switchTab('summary')" id="summaryTab">Summary</div>
 </div>
         </div>
@@ -1040,7 +1040,7 @@ footer p {
     // ================================
 // DATA PRODUK
 // ================================
-const books = [
+const keychain = [
   { id: 1, name: "We bare bears keychain", price: 60000, image: "id-11134207-7rask-m1kd7huecvqp2e.avif", category: "Keychain" },
   { id: 2, name: "Bumi Manusia", price: 92000, image: "https://via.placeholder.com/150", category: "Physical" },
   { id: 3, name: "Perahu Kertas", price: 78000, image: "https://via.placeholder.com/150", category: "Physical" },
@@ -1055,7 +1055,7 @@ const summaryBooks = [
 ];
 
 // Gabungkan semua produk
-const products = [...books, ...summaryBooks];
+const products = [...keychain, ...summaryBooks];
 
 // ================================
 // CONFIG DISKON
@@ -1180,8 +1180,8 @@ function loadProducts() {
   
   let data = [];
   
-  if (activeTab === "books") {
-    data = books;
+  if (activeTab === "keychain") {
+    data = keychain;
   } else if (activeTab === "summary") {
     data = summaryBooks;
   } else {
@@ -1268,11 +1268,11 @@ function switchTab(tab) {
   activeTab = tab;
   
   const allTab = document.getElementById('allTab');
-  const booksTab = document.getElementById('booksTab');
+  const keychainTab = document.getElementById('keychainTab');
   const summaryTab = document.getElementById('summaryTab');
   
   if (allTab) allTab.classList.toggle('active', tab === 'all');
-  if (booksTab) booksTab.classList.toggle('active', tab === 'books');
+  if (keychainTab) keychainTab.classList.toggle('active', tab === 'keychain');
   if (summaryTab) summaryTab.classList.toggle('active', tab === 'summary');
   
   loadProducts();
@@ -1575,4 +1575,5 @@ window.addEventListener('beforeunload', function() {
 </body>
 
 </html>
+
 
