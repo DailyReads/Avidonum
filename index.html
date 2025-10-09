@@ -873,6 +873,89 @@ footer p {
     flex: 1 1 100%;
   }
 }
+    /* ========== RECEIPT ITEM WITH IMAGE ========== */
+.receipt-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 15px 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.receipt-item-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-name {
+  font-weight: 600;
+  margin-bottom: 3px;
+  font-size: 15px;
+}
+
+.item-qty-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.item-qty-badge {
+  background: #f0f0f0;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #333;
+}
+
+.item-unit-price {
+  color: #666;
+}
+
+.item-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.item-total-price {
+  font-weight: 700;
+  color: #333;
+  font-size: 16px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .receipt-item {
+    gap: 10px;
+  }
+  
+  .receipt-item-image {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .item-name {
+    font-size: 14px;
+  }
+  
+  .item-total-price {
+    font-size: 15px;
+  }
+}
   </style>
 </head>
 <body>
@@ -1343,35 +1426,42 @@ function updateCartDisplay() {
 
   // Update cart items
   if (cartItems) {
-    if (cart.length === 0) {
-      cartItems.innerHTML = `
-        <div class="empty-cart">
-          <div class="empty-cart-icon">🛒</div>
-          <h3>Your cart is empty</h3>
-          <p>Add some books to get started!</p>
-          <button class="continue-shopping" onclick="toggleCart()">Continue Shopping</button>
-        </div>
-      `;
-      if (checkoutBtn) checkoutBtn.disabled = true;
-    } else {
-      cartItems.innerHTML = cart.map(item => {
-        const itemPrice = item.finalPrice || item.price;
-        return `
-          <div class="receipt-item">
-            <div class="item-info">
-              <div class="item-name">${item.name}</div>
-              <div class="item-controls">
-                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
-                <span class="quantity">${item.quantity}</span>
-                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
-              </div>
-            </div>
-            <div class="item-price">Rp ${(itemPrice * item.quantity).toLocaleString('id-ID')}</div>
+    // Ganti bagian ini di function updateCartDisplay()
+if (cart.length === 0) {
+  cartItems.innerHTML = `
+    <div class="empty-cart">
+      <div class="empty-cart-icon">🛒</div>
+      <h3>Your cart is empty</h3>
+      <p>Add some books to get started!</p>
+      <button class="continue-shopping" onclick="toggleCart()">Continue Shopping</button>
+    </div>
+  `;
+  if (checkoutBtn) checkoutBtn.disabled = true;
+} else {
+  cartItems.innerHTML = cart.map(item => {
+    const itemPrice = item.finalPrice || item.price;
+    const totalItemPrice = itemPrice * item.quantity;
+    return `
+      <div class="receipt-item">
+        <img src="${item.image}" alt="${item.name}" class="receipt-item-image">
+        <div class="item-info">
+          <div class="item-name">${item.name}</div>
+          <div class="item-qty-price">
+            <span class="item-qty-badge">x${item.quantity}</span>
+            <span class="item-unit-price">@ Rp ${itemPrice.toLocaleString('id-ID')}</span>
           </div>
-        `;
-      }).join('');
-      if (checkoutBtn) checkoutBtn.disabled = false;
-    }
+          <div class="item-controls">
+            <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+            <span class="quantity">${item.quantity}</span>
+            <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+          </div>
+        </div>
+        <div class="item-total-price">Rp ${totalItemPrice.toLocaleString('id-ID')}</div>
+      </div>
+    `;
+  }).join('');
+  if (checkoutBtn) checkoutBtn.disabled = false;
+}
   }
 
   if (totalAmount) {
@@ -1575,6 +1665,7 @@ window.addEventListener('beforeunload', function() {
 </body>
 
 </html>
+
 
 
 
