@@ -699,7 +699,17 @@ header {
   justify-content: space-between; 
   align-items: center;
   padding: 15px 0; 
-  border-bottom: 1px dashed #e0e0e0; 
+  border-bottom: 1px dashed #e0e0e0;
+  gap: 15px;  /* TAMBAHKAN INI */
+}
+
+/* TAMBAHKAN CSS BARU INI */
+.item-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
 }
 
 .receipt-item:last-child {
@@ -1349,11 +1359,12 @@ function updateCartDisplay() {
       if (checkoutBtn) checkoutBtn.disabled = true;
     } else {
       cartItems.innerHTML = cart.map(item => {
-        const itemPrice = item.finalPrice || item.price;
-        return `
-          <div class="receipt-item">
-            <div class="item-info">
-              <div class="item-name">${item.name}</div>
+  const itemPrice = item.finalPrice || item.price;
+  return `
+    <div class="receipt-item">
+      <img src="${item.image}" alt="${item.name}" class="item-image">
+      <div class="item-info">
+        <div class="item-name">${item.name}</div>
               <div class="item-controls">
                 <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
                 <span class="quantity">${item.quantity}</span>
@@ -1544,16 +1555,16 @@ document.addEventListener('DOMContentLoaded', function() {
   if (booksTab) booksTab.classList.remove('active');
   if (summaryTab) summaryTab.classList.remove('active');
   
-  const shopNowBtn = document.getElementById("shop-now");
-  if (shopNowBtn) {
-    shopNowBtn.addEventListener("click", function(e) {
-      e.preventDefault();
-      const target = document.getElementById("discountGrid");
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  }
+ const shopNowBtn = document.getElementById("shop-now");
+if (shopNowBtn) {
+  shopNowBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    const target = document.getElementById("books-section");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+}
   
   const cartSection = document.getElementById('cartSection');
   if (cartSection) {
