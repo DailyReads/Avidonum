@@ -312,44 +312,6 @@ header {
   display: none;
 }
 
-/* ========== TABS ========== */
-.tabs {
-  background: white;
-  padding: 16px 0;
-  border-bottom: 1px solid #e1e5e9;
-}
-
-.tabs-container {
-  display: flex;
-  gap: 8px;
-  max-width: 300px;
-  margin: 0 auto;
-}
-
-.tab {
-  flex: 1;
-  padding: 12px 24px;
-  background: #f8f9fa;
-  border: 1px solid #e1e5e9;
-  border-radius: 25px;
-  text-align: center;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s;
-  color: #666;
-}
-
-.tab.active {
-  background: #007bff;
-  color: white;
-  border-color: #007bff;
-  box-shadow: 0 2px 8px rgba(0,123,255,0.2);
-}
-
-.tab:hover:not(.active) {
-  background: #e9ecef;
-}
-
 /* ========== SECTION ========== */
 .section { 
   padding: 40px 20px; 
@@ -672,7 +634,7 @@ header {
 }
 
 .receipt-header { 
-  background: linear-gradient(135deg, #000, #333); 
+  background: linear-gradient(135deg, #ca9b6c);
   padding: 20px; 
   color: white; 
   text-align: center; 
@@ -705,8 +667,8 @@ header {
 
 /* TAMBAHKAN CSS BARU INI */
 .item-image {
-  width: 60px;
-  height: 60px;
+  width: 75px;
+  height: 75px;
   object-fit: cover;
   border-radius: 8px;
   flex-shrink: 0;
@@ -926,7 +888,7 @@ footer p {
     </div>
   </div>
 </div>
-            <a href="#books-section" class="btn btn-primary" id="shop-now">Shop Now</a>
+           <button class="btn btn-primary" onclick="scrollToProducts()">Shop Now</button>
         </div>
     </section>
 
@@ -945,30 +907,21 @@ footer p {
     <button id="searchClear" class="search-clear" onclick="clearSearch()">×</button>
   </div>
 </div>
-    <section class="tabs">
-        <div class="container">
-<div class="tabs-container">
-    <div class="tab active" onclick="switchTab('all')" id="allTab">All</div>
-    <div class="tab" onclick="switchTab('books')" id="booksTab">Book</div>
-    <div class="tab" onclick="switchTab('summary')" id="summaryTab">Summary</div>
-</div>
-        </div>
-    </section>
     
 <!-- === DISPLAY KHUSUS DISKON === -->
 <div class="section" id="discountSection">
-  <h2>Promo Spesial</h2>
+  <h2>Special Promo</h2>
   <div class="product-grid" id="discountGrid"></div>
 </div>
     <!-- Products Section -->
     <div class="section">
-      <h2>Koleksi Buku Terbaru</h2>
+      <h2>Our Products</h2>
       <div class="product-grid" id="productGrid">
         <!-- Products will be loaded here -->
       </div>
       <div class="no-results" id="noResults">
-        <h3>Tidak ada hasil ditemukan</h3>
-        <p>Coba kata kunci yang berbeda</p>
+        <h3>No Results</h3>
+        <p>Try a different keywords</p>
       </div>
     </div>
 
@@ -1047,37 +1000,31 @@ footer p {
   </div>
 
   <script>
-   // ================================
+  // ================================
 // DATA PRODUK
 // ================================
-const books = [
-  { id: 1, name: "Laskar Pelangi", price: 85000, image: "id-11134207-7rask-m1kd7huecvqp2e.avif", category: "Physical" },
-  { id: 2, name: "Bumi Manusia", price: 92000, image: "https://via.placeholder.com/150", category: "Physical" },
-  { id: 3, name: "Perahu Kertas", price: 78000, image: "https://via.placeholder.com/150", category: "Physical" },
-  { id: 4, name: "Negeri 5 Menara", price: 88000, image: "https://via.placeholder.com/150", category: "Physical" },
+const products = [
+  { id: 1, name: "Laskar Pelangi", price: 85000, image: "https://via.placeholder.com/150" },
+  { id: 2, name: "Bumi Manusia", price: 92000, image: "https://via.placeholder.com/150" },
+  { id: 3, name: "Perahu Kertas", price: 78000, image: "https://via.placeholder.com/150" },
+  { id: 4, name: "Negeri 5 Menara", price: 88000, image: "https://via.placeholder.com/150" },
+  { id: 5, name: "Laskar Pelangi (Summary)", price: 25000, image: "https://via.placeholder.com/150" },
+  { id: 6, name: "Bumi Manusia (Summary)", price: 27000, image: "https://via.placeholder.com/150" },
+  { id: 7, name: "Perahu Kertas (Summary)", price: 22000, image: "https://via.placeholder.com/150" },
+  { id: 8, name: "Negeri 5 Menara (Summary)", price: 24000, image: "https://via.placeholder.com/150" },
 ];
-
-const summaryBooks = [
-  { id: 101, name: "Laskar Pelangi (Summary)", price: 25000, image: "https://via.placeholder.com/150", category: "Summary" },
-  { id: 102, name: "Bumi Manusia (Summary)", price: 27000, image: "https://via.placeholder.com/150", category: "Summary" },
-  { id: 103, name: "Perahu Kertas (Summary)", price: 22000, image: "https://via.placeholder.com/150", category: "Summary" },
-  { id: 104, name: "Negeri 5 Menara (Summary)", price: 24000, image: "https://via.placeholder.com/150", category: "Summary" },
-];
-
-const products = [...books, ...summaryBooks];
 
 // ================================
 // CONFIG DISKON
 // ================================
 const discountRate = 20;
-const discountProducts = [1, 2, 101];
+const discountProducts = [1, 2, 5]; // ID produk yang dapat diskon
 
 // ================================
 // GLOBAL VARIABLES
 // ================================
 let cart = [];
 let currentDiscount = 0;
-let activeTab = 'all';
 let appliedPromo = null;
 let isDiscountActive = true; // Status apakah diskon masih berlaku
 
@@ -1089,7 +1036,7 @@ const promoList = {
 // ================================
 // COUNTDOWN TIMER
 // ================================
-const targetDate = new Date("2025-10-23T19:40:00").getTime();
+const targetDate = new Date("2025-10-26T19:40:00").getTime();
 let timer = null;
 
 function updateCountdown() {
@@ -1139,7 +1086,6 @@ function loadDiscountProducts() {
   const grid = document.getElementById("discountGrid");
   if (!grid) return;
   
-  // Jika diskon sudah expired, tidak tampilkan apa-apa
   if (!isDiscountActive) {
     return;
   }
@@ -1161,7 +1107,7 @@ function loadDiscountProducts() {
           <s>Rp ${product.price.toLocaleString('id-ID')}</s> 
           <strong style="color:black;">Rp ${discountPrice.toLocaleString('id-ID')}</strong>
         </div>
-        <span class="product-badge">Diskon ${discountRate}%</span>
+        <span class="product-badge">Promo</span>
         <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
       </div>
     `;
@@ -1179,28 +1125,18 @@ function hideDiscountDisplay() {
 }
 
 // ================================
-// LOAD PRODUK UTAMA
+// LOAD PRODUK UTAMA (TANPA BADGE CATEGORY)
 // ================================
 function loadProducts() {
   const grid = document.getElementById('productGrid');
   if (!grid) return;
-  
-  let data = [];
-  
-  if (activeTab === "books") {
-    data = books;
-  } else if (activeTab === "summary") {
-    data = summaryBooks;
-  } else {
-    data = products;
-  }
 
-  if (data.length === 0) {
+  if (products.length === 0) {
     grid.innerHTML = '<p style="text-align:center; color:#666;">Tidak ada produk tersedia</p>';
     return;
   }
 
-  grid.innerHTML = data.map(product => {
+  grid.innerHTML = products.map(product => {
     // Cek apakah produk dapat diskon DAN diskon masih aktif
     const isDiscount = isDiscountActive && discountProducts.includes(product.id);
     const discountPrice = isDiscount
@@ -1218,10 +1154,10 @@ function loadProducts() {
             : `Rp ${product.price.toLocaleString('id-ID')}`
           }
         </div>
-        ${isDiscount 
-          ? `<span class="product-badge">Diskon ${discountRate}%</span>` 
-          : `<span class="product-badge">${product.category}</span>`
-        }
+       ${isDiscount 
+  ? `<span class="product-badge">Promo</span>` 
+  : ``
+}
         <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
       </div>
     `;
@@ -1270,25 +1206,40 @@ function clearSearch() {
 }
 
 // ================================
-// TAB SWITCHING
+// LOCALSTORAGE FUNCTIONS
 // ================================
-function switchTab(tab) {
-  activeTab = tab;
+function saveCartToLocalStorage() {
+  localStorage.setItem('literadiaCart', JSON.stringify(cart));
+  localStorage.setItem('literadiaPromo', JSON.stringify(appliedPromo));
+  localStorage.setItem('literadiaDiscount', currentDiscount.toString());
+}
+
+function loadCartFromLocalStorage() {
+  const savedCart = localStorage.getItem('literadiaCart');
+  const savedPromo = localStorage.getItem('literadiaPromo');
+  const savedDiscount = localStorage.getItem('literadiaDiscount');
   
-  const allTab = document.getElementById('allTab');
-  const booksTab = document.getElementById('booksTab');
-  const summaryTab = document.getElementById('summaryTab');
+  if (savedCart) {
+    cart = JSON.parse(savedCart);
+  }
   
-  if (allTab) allTab.classList.toggle('active', tab === 'all');
-  if (booksTab) booksTab.classList.toggle('active', tab === 'books');
-  if (summaryTab) summaryTab.classList.toggle('active', tab === 'summary');
+  if (savedPromo) {
+    appliedPromo = JSON.parse(savedPromo);
+  }
   
-  loadProducts();
-  clearSearch();
+  if (savedDiscount) {
+    currentDiscount = parseFloat(savedDiscount);
+  }
+}
+
+function clearCartFromLocalStorage() {
+  localStorage.removeItem('literadiaCart');
+  localStorage.removeItem('literadiaPromo');
+  localStorage.removeItem('literadiaDiscount');
 }
 
 // ================================
-// CART FUNCTIONALITY
+// CART FUNCTIONALITY (DENGAN LOCALSTORAGE)
 // ================================
 function addToCart(productId) {
   const product = products.find(p => p.id === productId);
@@ -1312,6 +1263,7 @@ function addToCart(productId) {
     });
   }
 
+  saveCartToLocalStorage(); // SIMPAN KE LOCALSTORAGE
   updateCartDisplay();
   showNotification(`${product.name} added to cart!`);
 }
@@ -1324,6 +1276,7 @@ function updateQuantity(productId, change) {
       cart = cart.filter(item => item.id !== productId);
     }
   }
+  saveCartToLocalStorage(); // SIMPAN KE LOCALSTORAGE
   updateCartDisplay();
 }
 
@@ -1359,12 +1312,12 @@ function updateCartDisplay() {
       if (checkoutBtn) checkoutBtn.disabled = true;
     } else {
       cartItems.innerHTML = cart.map(item => {
-  const itemPrice = item.finalPrice || item.price;
-  return `
-    <div class="receipt-item">
-      <img src="${item.image}" alt="${item.name}" class="item-image">
-      <div class="item-info">
-        <div class="item-name">${item.name}</div>
+        const itemPrice = item.finalPrice || item.price;
+        return `
+          <div class="receipt-item">
+            <img src="${item.image}" alt="${item.name}" class="item-image">
+            <div class="item-info">
+              <div class="item-name">${item.name}</div>
               <div class="item-controls">
                 <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
                 <span class="quantity">${item.quantity}</span>
@@ -1402,7 +1355,7 @@ function toggleCart() {
 }
 
 // ================================
-// PROMO CODE
+// PROMO CODE (DENGAN LOCALSTORAGE)
 // ================================
 function applyPromo() {
   const promoCodeInput = document.getElementById("promoCode");
@@ -1436,7 +1389,7 @@ function applyPromo() {
 }
 
 // ================================
-// WHATSAPP CHECKOUT
+// WHATSAPP CHECKOUT (DENGAN CLEAR LOCALSTORAGE)
 // ================================
 function sendToWhatsApp() {
   const customerName = document.getElementById('customerName');
@@ -1488,6 +1441,9 @@ function sendToWhatsApp() {
     cart = [];
     appliedPromo = null;
     currentDiscount = 0;
+    
+    clearCartFromLocalStorage(); // HAPUS DARI LOCALSTORAGE
+    
     updateCartDisplay();
     toggleCart();
     customerName.value = '';
@@ -1530,7 +1486,11 @@ function showNotification(message) {
 function scrollToProducts() {
   const section = document.querySelector('.section');
   if (section) {
-    section.scrollIntoView({ behavior: 'smooth' });
+    const offsetTop = section.offsetTop - 20; // 20px dari atas (bisa disesuaikan)
+    window.scrollTo({
+      top: offsetTop,
+      behavior: 'smooth'
+    });
   }
 }
 
@@ -1538,33 +1498,15 @@ function scrollToProducts() {
 // INITIALIZE
 // ================================
 document.addEventListener('DOMContentLoaded', function() {
-  activeTab = "all";
+  // LOAD CART DARI LOCALSTORAGE
+  loadCartFromLocalStorage();
   
   loadProducts();
   loadDiscountProducts();
-  updateCartDisplay();
+  updateCartDisplay(); // Update display setelah load dari localStorage
   updateCountdown();
   
   timer = setInterval(updateCountdown, 1000);
-
-  const allTab = document.getElementById('allTab');
-  const booksTab = document.getElementById('booksTab');
-  const summaryTab = document.getElementById('summaryTab');
-  
-  if (allTab) allTab.classList.add('active');
-  if (booksTab) booksTab.classList.remove('active');
-  if (summaryTab) summaryTab.classList.remove('active');
-  
- const shopNowBtn = document.getElementById("shop-now");
-if (shopNowBtn) {
-  shopNowBtn.addEventListener("click", function(e) {
-    e.preventDefault();
-    const target = document.getElementById("books-section");
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  });
-}
   
   const cartSection = document.getElementById('cartSection');
   if (cartSection) {
@@ -1596,4 +1538,3 @@ window.addEventListener('beforeunload', function() {
   </script>
 </body>
 </html>
-
