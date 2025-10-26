@@ -1422,7 +1422,7 @@ function sendToWhatsApp() {
   const subtotal = cart.reduce((sum, item) => sum + ((item.finalPrice || item.price) * item.quantity), 0);
   const total = subtotal - (subtotal * currentDiscount / 100);
 
-  let message = `*LITERADIA BOOKSTORE ORDER*\n\n`;
+  let message = `*Keyloops Store Order*\n\n`;
   message += `Customer: ${name}\n`;
   message += `Email: ${email}\n\n`;
   message += `*ORDER DETAILS:*\n`;
@@ -1546,6 +1546,7 @@ window.addEventListener('beforeunload', function() {
   </script>
 </body>
 </html>
+
 
 
 
