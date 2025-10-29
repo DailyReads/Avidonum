@@ -852,6 +852,34 @@ footer p {
     flex: 1 1 100%;
   }
 }
+
+/* ========== PRODUCT ACTIONS ========== */
+.product-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.details-btn-product {
+  background: transparent;
+  color: #d4a373;
+  border: 2px solid #d4a373;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.details-btn-product:hover {
+  background: #d4a373;
+  color: white;
+}
   </style>
 </head>
 <body>
@@ -1132,6 +1160,52 @@ function hideDiscountDisplay() {
 }
 
 // ================================
+// LOAD PRODUK UTAMA (TERMASUK SPECIAL PROMO)
+// ================================
+function loadProducts() {
+  const grid = document.getElementById('productGrid');
+  if (!grid) return;
+
+  if (products.length === 0) {
+    grid.innerHTML = '<p style="text-align:center; color:#666;">Tidak ada produk tersedia</p>';
+    return;
+  }
+
+  grid.innerHTML = products.map(product => {
+    // Cek apakah produk termasuk special promo
+    const isDiscount = isDiscountActive && discountProducts.includes(product.id);
+    const discountPrice = isDiscount
+      ? Math.round(product.price * (1 - discountRate / 100))
+      : product.price;
+
+    return `
+      <div class="product-card" data-name="${product.name.toLowerCase()}">
+        <div class="product-image-wrapper">
+          <img src="${product.image}" alt="${product.name}" loading="lazy">
+          ${isDiscount ? `<span class="product-badge promo-badge">Special Promo</span>` : ``}
+        </div>
+
+        <div class="product-info">
+          <div class="product-name">${product.name}</div>
+          <div class="product-price">
+            ${isDiscount 
+              ? `<s>Rp ${product.price.toLocaleString('id-ID')}</s> 
+                 <strong style="color:black;">Rp ${discountPrice.toLocaleString('id-ID')}</strong>`
+              : `Rp ${product.price.toLocaleString('id-ID')}`
+            }
+          </div>
+
+          <div class="product-actions">
+            <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
+            <a href="product-details.html?id=${product.id}" class="details-btn-product">View Details</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ================================
 // LOAD PRODUK UTAMA (TANPA BADGE CATEGORY)
 // ================================
 function loadProducts() {
@@ -1161,16 +1235,18 @@ function loadProducts() {
             : `Rp ${product.price.toLocaleString('id-ID')}`
           }
         </div>
-       ${isDiscount 
-  ? `<span class="product-badge">Promo</span>` 
-  : ``
-}
-        <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
+        ${isDiscount 
+          ? `<span class="product-badge">Promo</span>` 
+          : ``
+        }
+        <div class="product-actions">
+          <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
+          <a href="product-details.html?id=${product.id}" class="details-btn-product">View Details</a>
+        </div>
       </div>
     `;
   }).join('');
 }
-
 // ================================
 // SEARCH FUNCTIONALITY
 // ================================
@@ -1545,7 +1621,3 @@ window.addEventListener('beforeunload', function() {
   </script>
 </body>
 </html>
-
-
-
-
