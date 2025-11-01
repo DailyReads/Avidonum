@@ -940,23 +940,15 @@ footer p {
 
 .image-slider-details {
   display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  gap: 10px;
+  justify-content: center;
   width: 100%;
   max-width: 480px;
   border-radius: 12px;
   background: white;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   padding: 10px;
-  cursor: grab;
-  user-select: none;
-  scroll-behavior: smooth; /* TAMBAHKAN untuk smooth scroll */
 }
 
-.image-slider-details:active {
-  cursor: grabbing;
-}
 
 .image-slider-details img {
   width: 100%;
@@ -1560,14 +1552,12 @@ function showProductDetails(productId) {
   detailsDescription.textContent = product.description || `${product.name} - Keychain berkualitas tinggi dengan desain minimalis dan elegan.`;
 }
 
-  // Set images (you can add multiple images here)
-  if (detailsImageSlider) {
-    detailsImageSlider.innerHTML = `
-      <img src="${product.image}" alt="${product.name} - View 1">
-      <img src="${product.image}" alt="${product.name} - View 2">
-      <img src="${product.image}" alt="${product.name} - View 3">
-    `;
-  }
+ // Set single image
+if (detailsImageSlider) {
+  detailsImageSlider.innerHTML = `
+    <img src="${product.image}" alt="${product.name}">
+  `;
+}
 
   // Set add to cart button
   if (detailsAddToCartBtn) {
@@ -1627,61 +1617,6 @@ function clearSearch() {
   
   document.querySelectorAll('.product-card').forEach(card => {
     card.classList.remove('hidden');
-  });
-}
-// ================================
-// IMAGE SLIDER DRAG FUNCTIONALITY
-// ================================
-function initDragScroll() {
-  const slider = document.getElementById('detailsImageSlider');
-  if (!slider) return;
-
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-  let isDragging = false;
-
-  slider.addEventListener('mousedown', (e) => {
-    // Hanya aktif jika klik di area gambar atau slider
-    if (e.target.tagName === 'IMG' || e.target === slider) {
-      isDown = true;
-      isDragging = false;
-      slider.style.cursor = 'grabbing';
-      slider.style.scrollBehavior = 'auto'; // Disable smooth scroll saat drag
-      startX = e.pageX - slider.offsetLeft;
-      scrollLeft = slider.scrollLeft;
-    }
-  });
-
-  slider.addEventListener('mouseleave', () => {
-    isDown = false;
-    slider.style.cursor = 'grab';
-    slider.style.scrollBehavior = 'smooth';
-  });
-
-  slider.addEventListener('mouseup', () => {
-    isDown = false;
-    slider.style.cursor = 'grab';
-    slider.style.scrollBehavior = 'smooth';
-  });
-
-  slider.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    isDragging = true;
-    const x = e.pageX - slider.offsetLeft;
-    const walk = (x - startX) * 2.5; // Kecepatan drag
-    slider.scrollLeft = scrollLeft - walk;
-  });
-
-  // Prevent klik pada gambar jika sedang drag
-  const images = slider.querySelectorAll('img');
-  images.forEach(img => {
-    img.addEventListener('click', (e) => {
-      if (isDragging) {
-        e.preventDefault();
-      }
-    });
   });
 }
 // ================================
