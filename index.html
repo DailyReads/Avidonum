@@ -1066,91 +1066,6 @@ footer p {
     max-width: 100%;
   }
 }
-/* ========== RELATED PRODUCTS ========== */
-.related-products-section {
-  max-width: 1200px;
-  margin: 40px auto 0;
-  padding: 0 20px;
-}
-
-.related-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.related-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-}
-
-@media (min-width: 768px) {
-  .related-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
-}
-
-.related-product-card {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
-}
-
-.related-product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-}
-
-.related-product-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-}
-
-.related-product-info {
-  padding: 12px;
-}
-
-.related-product-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.related-product-price {
-  font-size: 14px;
-  font-weight: 700;
-  color: #d4a373;
-}
-
-@media (min-width: 768px) {
-  .related-product-card img {
-    height: 180px;
-  }
-  
-  .related-product-info {
-    padding: 15px;
-  }
-  
-  .related-product-name {
-    font-size: 16px;
-  }
-  
-  .related-product-price {
-    font-size: 16px;
-  }
-}
   </style>
 </head>
 <body>
@@ -1252,13 +1167,6 @@ footer p {
         </div>
 
         <button class="add-to-cart-details-btn" id="detailsAddToCartBtn">Add to Cart</button>
-
-<!-- Related Products Section -->
-<div class="related-products-section">
-  <h2 class="related-title">Other Products</h2>
-  <div class="related-grid" id="relatedProductsGrid">
-  </div>
-</div>
       </div>
     </div>
   </div>
@@ -1538,7 +1446,7 @@ function loadProducts() {
       <div class="product-card" data-name="${product.name.toLowerCase()}">
         <div class="product-image-wrapper">
           <img src="${product.image}" alt="${product.name}" loading="lazy">
-          ${isDiscount ? `<span class="product-badge promo-badge">Special Promo</span>` : ``}
+          ${isDiscount ? <span class="product-badge promo-badge">Special Promo</span> : ``}
         </div>
 
         <div class="product-info">
@@ -1547,7 +1455,7 @@ function loadProducts() {
             ${isDiscount 
               ? `<s>Rp ${product.price.toLocaleString('id-ID')}</s> 
                  <strong style="color:black;">Rp ${discountPrice.toLocaleString('id-ID')}</strong>`
-              : `Rp ${product.price.toLocaleString('id-ID')}`
+              : Rp ${product.price.toLocaleString('id-ID')}
             }
           </div>
 
@@ -1588,11 +1496,11 @@ function loadProducts() {
           ${isDiscount 
             ? `<s>Rp ${product.price.toLocaleString('id-ID')}</s> 
                <strong style="color:black;">Rp ${discountPrice.toLocaleString('id-ID')}</strong>`
-            : `Rp ${product.price.toLocaleString('id-ID')}`
+            : Rp ${product.price.toLocaleString('id-ID')}
           }
         </div>
         ${isDiscount 
-          ? `<span class="product-badge">Promo</span>` 
+          ? <span class="product-badge">Promo</span> 
           : ``
         }
         <div class="product-actions">
@@ -1636,12 +1544,12 @@ function showProductDetails(productId) {
         Rp ${finalPrice.toLocaleString('id-ID')}
       `;
     } else {
-      detailsPrice.textContent = `Rp ${product.price.toLocaleString('id-ID')}`;
+      detailsPrice.textContent = Rp ${product.price.toLocaleString('id-ID')};
     }
   }
   
  if (detailsDescription) {
-  detailsDescription.textContent = product.description || `${product.name} - Keychain berkualitas tinggi dengan desain minimalis dan elegan.`;
+  detailsDescription.textContent = product.description || ${product.name} - Keychain berkualitas tinggi dengan desain minimalis dan elegan.;
 }
 
  // Set single image
@@ -1658,49 +1566,6 @@ if (detailsImageSlider) {
       closeProductDetails();
     };
   }
-  // ================================
-// LOAD RELATED PRODUCTS
-// TAMBAHKAN FUNCTION INI di bagian JavaScript
-// ================================
-function loadRelatedProducts(currentProductId) {
-  const relatedGrid = document.getElementById('relatedProductsGrid');
-  if (!relatedGrid) return;
-
-  // Filter products (exclude current product, show max 4)
-  const relatedProducts = products
-    .filter(p => p.id !== currentProductId)
-    .slice(0, 4);
-
-  if (relatedProducts.length === 0) {
-    relatedGrid.innerHTML = '<p style="text-align:center; color:#666;">No other products available</p>';
-    return;
-  }
-
-  relatedGrid.innerHTML = relatedProducts.map(product => {
-    const isDiscount = isDiscountActive && discountProducts.includes(product.id);
-    const finalPrice = isDiscount 
-      ? Math.round(product.price * (1 - discountRate / 100))
-      : product.price;
-
-    return `
-      <div class="related-product-card" onclick="showProductDetails(${product.id})">
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
-        <div class="related-product-info">
-          <div class="related-product-name">${product.name}</div>
-          <div class="related-product-price">
-            ${isDiscount 
-              ? `<s style="font-size: 12px; color: #999;">Rp ${product.price.toLocaleString('id-ID')}</s><br>Rp ${finalPrice.toLocaleString('id-ID')}`
-              : `Rp ${product.price.toLocaleString('id-ID')}`
-            }
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-// Load related products
-loadRelatedProducts(productId);
 
   // Show modal
   modal.classList.add('active');
@@ -1814,7 +1679,7 @@ function addToCart(productId) {
 
   saveCartToLocalStorage(); // SIMPAN KE LOCALSTORAGE
   updateCartDisplay();
-  showNotification(`${product.name} added to cart!`);
+  showNotification(${product.name} added to cart!);
 }
 
 function updateQuantity(productId, change) {
@@ -1882,7 +1747,7 @@ function updateCartDisplay() {
   }
 
   if (totalAmount) {
-    totalAmount.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+    totalAmount.textContent = Rp ${total.toLocaleString('id-ID')};
   }
 }
 
@@ -1926,7 +1791,7 @@ function applyPromo() {
     currentDiscount = promo.value;
 
     promoMessage.style.color = "green";
-    promoMessage.textContent = `Promo ${code} berhasil diterapkan! Diskon ${promo.value}%`;
+    promoMessage.textContent = Promo ${code} berhasil diterapkan! Diskon ${promo.value}%;
 
     updateCartDisplay();
   } else if (code) {
@@ -1963,26 +1828,26 @@ function sendToWhatsApp() {
   const subtotal = cart.reduce((sum, item) => sum + ((item.finalPrice || item.price) * item.quantity), 0);
   const total = subtotal - (subtotal * currentDiscount / 100);
 
-  let message = `*Keyloops Store Order*\n\n`;
-  message += `Customer: ${name}\n`;
-  message += `Email: ${email}\n\n`;
-  message += `*ORDER DETAILS:*\n`;
+  let message = *Keyloops Store Order*\n\n;
+  message += Customer: ${name}\n;
+  message += Email: ${email}\n\n;
+  message += *ORDER DETAILS:*\n;
   
   cart.forEach(item => {
     const itemPrice = item.finalPrice || item.price;
-    message += `• ${item.name}\n  Qty: ${item.quantity} x Rp ${itemPrice.toLocaleString('id-ID')}\n  Subtotal: Rp ${(itemPrice * item.quantity).toLocaleString('id-ID')}\n\n`;
+    message += • ${item.name}\n  Qty: ${item.quantity} x Rp ${itemPrice.toLocaleString('id-ID')}\n  Subtotal: Rp ${(itemPrice * item.quantity).toLocaleString('id-ID')}\n\n;
   });
 
   if (currentDiscount > 0) {
-    message += `Subtotal: Rp ${subtotal.toLocaleString('id-ID')}\n`;
-    message += `Discount (${currentDiscount}%): -Rp ${(subtotal * currentDiscount / 100).toLocaleString('id-ID')}\n`;
+    message += Subtotal: Rp ${subtotal.toLocaleString('id-ID')}\n;
+    message += Discount (${currentDiscount}%): -Rp ${(subtotal * currentDiscount / 100).toLocaleString('id-ID')}\n;
   }
 
-  message += `*TOTAL: Rp ${total.toLocaleString('id-ID')}*\n\n`;
-  message += `Thank you for your order!`;
+  message += *TOTAL: Rp ${total.toLocaleString('id-ID')}*\n\n;
+  message += Thank you for your order!;
 
   const whatsappNumber = '082382052250';
-  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  const whatsappURL = https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)};
   
   window.open(whatsappURL, '_blank');
 
