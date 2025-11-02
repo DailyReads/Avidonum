@@ -1446,7 +1446,7 @@ function loadProducts() {
       <div class="product-card" data-name="${product.name.toLowerCase()}">
         <div class="product-image-wrapper">
           <img src="${product.image}" alt="${product.name}" loading="lazy">
-          ${isDiscount ? <span class="product-badge promo-badge">Special Promo</span> : ``}
+          ${isDiscount ? `<span class="product-badge promo-badge">Special Promo</span>` : ``}
         </div>
 
         <div class="product-info">
@@ -1455,7 +1455,7 @@ function loadProducts() {
             ${isDiscount 
               ? `<s>Rp ${product.price.toLocaleString('id-ID')}</s> 
                  <strong style="color:black;">Rp ${discountPrice.toLocaleString('id-ID')}</strong>`
-              : Rp ${product.price.toLocaleString('id-ID')}
+              : `Rp ${product.price.toLocaleString('id-ID')}`
             }
           </div>
 
@@ -1496,11 +1496,11 @@ function loadProducts() {
           ${isDiscount 
             ? `<s>Rp ${product.price.toLocaleString('id-ID')}</s> 
                <strong style="color:black;">Rp ${discountPrice.toLocaleString('id-ID')}</strong>`
-            : Rp ${product.price.toLocaleString('id-ID')}
+            : `Rp ${product.price.toLocaleString('id-ID')}`
           }
         </div>
         ${isDiscount 
-          ? <span class="product-badge">Promo</span> 
+          ? `<span class="product-badge">Promo</span>` 
           : ``
         }
         <div class="product-actions">
@@ -1544,12 +1544,12 @@ function showProductDetails(productId) {
         Rp ${finalPrice.toLocaleString('id-ID')}
       `;
     } else {
-      detailsPrice.textContent = Rp ${product.price.toLocaleString('id-ID')};
+      detailsPrice.textContent = `Rp ${product.price.toLocaleString('id-ID')}`;
     }
   }
   
  if (detailsDescription) {
-  detailsDescription.textContent = product.description || ${product.name} - Keychain berkualitas tinggi dengan desain minimalis dan elegan.;
+  detailsDescription.textContent = product.description || `${product.name} - Keychain berkualitas tinggi dengan desain minimalis dan elegan.`;
 }
 
  // Set single image
@@ -1679,7 +1679,7 @@ function addToCart(productId) {
 
   saveCartToLocalStorage(); // SIMPAN KE LOCALSTORAGE
   updateCartDisplay();
-  showNotification(${product.name} added to cart!);
+  showNotification(`${product.name} added to cart!`);
 }
 
 function updateQuantity(productId, change) {
@@ -1747,7 +1747,7 @@ function updateCartDisplay() {
   }
 
   if (totalAmount) {
-    totalAmount.textContent = Rp ${total.toLocaleString('id-ID')};
+    totalAmount.textContent = `Rp ${total.toLocaleString('id-ID')}`;
   }
 }
 
@@ -1791,7 +1791,7 @@ function applyPromo() {
     currentDiscount = promo.value;
 
     promoMessage.style.color = "green";
-    promoMessage.textContent = Promo ${code} berhasil diterapkan! Diskon ${promo.value}%;
+    promoMessage.textContent = `Promo ${code} berhasil diterapkan! Diskon ${promo.value}%`;
 
     updateCartDisplay();
   } else if (code) {
@@ -1828,26 +1828,26 @@ function sendToWhatsApp() {
   const subtotal = cart.reduce((sum, item) => sum + ((item.finalPrice || item.price) * item.quantity), 0);
   const total = subtotal - (subtotal * currentDiscount / 100);
 
-  let message = *Keyloops Store Order*\n\n;
-  message += Customer: ${name}\n;
-  message += Email: ${email}\n\n;
-  message += *ORDER DETAILS:*\n;
+  let message = `*Keyloops Store Order*\n\n`;
+  message += `Customer: ${name}\n`;
+  message += `Email: ${email}\n\n`;
+  message += `*ORDER DETAILS:*\n`;
   
   cart.forEach(item => {
     const itemPrice = item.finalPrice || item.price;
-    message += • ${item.name}\n  Qty: ${item.quantity} x Rp ${itemPrice.toLocaleString('id-ID')}\n  Subtotal: Rp ${(itemPrice * item.quantity).toLocaleString('id-ID')}\n\n;
+    message += `• ${item.name}\n  Qty: ${item.quantity} x Rp ${itemPrice.toLocaleString('id-ID')}\n  Subtotal: Rp ${(itemPrice * item.quantity).toLocaleString('id-ID')}\n\n`;
   });
 
   if (currentDiscount > 0) {
-    message += Subtotal: Rp ${subtotal.toLocaleString('id-ID')}\n;
-    message += Discount (${currentDiscount}%): -Rp ${(subtotal * currentDiscount / 100).toLocaleString('id-ID')}\n;
+    message += `Subtotal: Rp ${subtotal.toLocaleString('id-ID')}\n`;
+    message += `Discount (${currentDiscount}%): -Rp ${(subtotal * currentDiscount / 100).toLocaleString('id-ID')}\n`;
   }
 
-  message += *TOTAL: Rp ${total.toLocaleString('id-ID')}*\n\n;
-  message += Thank you for your order!;
+  message += `*TOTAL: Rp ${total.toLocaleString('id-ID')}*\n\n`;
+  message += `Thank you for your order!`;
 
   const whatsappNumber = '082382052250';
-  const whatsappURL = https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)};
+  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   
   window.open(whatsappURL, '_blank');
 
