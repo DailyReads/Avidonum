@@ -1066,6 +1066,91 @@ footer p {
     max-width: 100%;
   }
 }
+/* ========== RELATED PRODUCTS ========== */
+.related-products-section {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding: 0 20px;
+}
+
+.related-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+@media (min-width: 768px) {
+  .related-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+}
+
+.related-product-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.related-product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.related-product-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.related-product-info {
+  padding: 12px;
+}
+
+.related-product-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.related-product-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #d4a373;
+}
+
+@media (min-width: 768px) {
+  .related-product-card img {
+    height: 180px;
+  }
+  
+  .related-product-info {
+    padding: 15px;
+  }
+  
+  .related-product-name {
+    font-size: 16px;
+  }
+  
+  .related-product-price {
+    font-size: 16px;
+  }
+}
   </style>
 </head>
 <body>
@@ -1167,6 +1252,13 @@ footer p {
         </div>
 
         <button class="add-to-cart-details-btn" id="detailsAddToCartBtn">Add to Cart</button>
+
+<!-- Related Products Section -->
+<div class="related-products-section">
+  <h2 class="related-title">Other Products</h2>
+  <div class="related-grid" id="relatedProductsGrid">
+  </div>
+</div>
       </div>
     </div>
   </div>
@@ -1566,6 +1658,49 @@ if (detailsImageSlider) {
       closeProductDetails();
     };
   }
+  // ================================
+// LOAD RELATED PRODUCTS
+// TAMBAHKAN FUNCTION INI di bagian JavaScript
+// ================================
+function loadRelatedProducts(currentProductId) {
+  const relatedGrid = document.getElementById('relatedProductsGrid');
+  if (!relatedGrid) return;
+
+  // Filter products (exclude current product, show max 4)
+  const relatedProducts = products
+    .filter(p => p.id !== currentProductId)
+    .slice(0, 4);
+
+  if (relatedProducts.length === 0) {
+    relatedGrid.innerHTML = '<p style="text-align:center; color:#666;">No other products available</p>';
+    return;
+  }
+
+  relatedGrid.innerHTML = relatedProducts.map(product => {
+    const isDiscount = isDiscountActive && discountProducts.includes(product.id);
+    const finalPrice = isDiscount 
+      ? Math.round(product.price * (1 - discountRate / 100))
+      : product.price;
+
+    return `
+      <div class="related-product-card" onclick="showProductDetails(${product.id})">
+        <img src="${product.image}" alt="${product.name}" loading="lazy">
+        <div class="related-product-info">
+          <div class="related-product-name">${product.name}</div>
+          <div class="related-product-price">
+            ${isDiscount 
+              ? `<s style="font-size: 12px; color: #999;">Rp ${product.price.toLocaleString('id-ID')}</s><br>Rp ${finalPrice.toLocaleString('id-ID')}`
+              : `Rp ${product.price.toLocaleString('id-ID')}`
+            }
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Load related products
+loadRelatedProducts(productId);
 
   // Show modal
   modal.classList.add('active');
