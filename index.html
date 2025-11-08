@@ -906,7 +906,7 @@ footer p {
   position: fixed;
   top: 16px;
   left: 16px;
-  z-index: 2001; /* UBAH dari 10 ke 2001 */
+  z-index: 2001;
   transition: transform 0.2s;
   background: white;
   border-radius: 50%;
@@ -914,6 +914,7 @@ footer p {
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: none;
 }
 
 .close-details-btn:hover {
@@ -929,26 +930,102 @@ footer p {
   margin-top: 60px;
 }
 
+/* ========== PRODUCT SECTION DETAILS ========== */
 .product-section-details {
   display: flex;
   gap: 32px;
   align-items: flex-start;
-  flex-wrap: wrap;
+  flex-direction: row; /* TAMBAHKAN INI */
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Desktop Layout - Image Left, Info Right */
+@media (min-width: 1024px) {
+  .product-section-details {
+    flex-direction: row; /* PASTIKAN ROW */
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0 40px;
+  }
+}
+
+/* ========== IMAGE SLIDER CONTAINER ========== */
+.image-slider-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  flex-shrink: 0; /* PENTING: Jangan menyusut */
+}
+
+/* Desktop - Image Slider di kiri */
+@media (min-width: 1024px) {
+  .image-slider-container {
+    margin: 0;
+  }
+}
+
+/* ========== PRODUCT INFO DETAILS ========== */
+.product-info-details {
+  flex: 1; /* AMBIL SISA SPACE */
+  min-width: 300px;
+}
+
+/* Desktop - Info di kanan, align left */
+@media (min-width: 1024px) {
+  .product-info-details {
+    text-align: left;
+    flex: 1;
+    padding-left: 20px;
+  }
+}
+
+/* ========== MOBILE RESPONSIVE ========== */
+@media (max-width: 1023px) {
+  .product-section-details {
+    flex-direction: column; /* MOBILE: VERTICAL */
+    align-items: center;
+  }
+  
+  .image-slider-container {
+    max-width: 100%;
+  }
+  
+  .product-info-details {
+    text-align: left;
+    width: 100%;
+    padding-left: 0;
+  }
+}
+/* ========== IMAGE SLIDER CONTAINER ========== */
+.image-slider-container {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+/* Desktop - Image Slider di kiri */
+@media (min-width: 1024px) {
+  .image-slider-container {
+    margin: 0;
+    margin-left: 0;
+  }
 }
 
 .image-slider-details {
   display: flex;
-  justify-content: center;
+  overflow: hidden;
   width: 100%;
-  max-width: 480px;
   border-radius: 12px;
   background: white;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   padding: 10px;
+  position: relative;
 }
-
 
 .image-slider-details img {
   width: 100%;
@@ -957,28 +1034,121 @@ footer p {
   object-fit: cover;
   border-radius: 8px;
   flex-shrink: 0;
-  scroll-snap-align: center;
-  pointer-events: auto; /* TAMBAHKAN agar gambar bisa di-drag */
+  display: none;
 }
 
-.image-slider-details::-webkit-scrollbar {
-  height: 8px;
+.image-slider-details img.active {
+  display: block;
 }
 
-.image-slider-details::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
+/* ========== SLIDER NAVIGATION BUTTONS ========== */
+.slider-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s;
+  z-index: 10;
 }
 
-.image-slider-details::-webkit-scrollbar-thumb {
+.slider-nav-btn:hover {
+  background: rgba(212, 163, 115, 0.9);
+  color: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.slider-nav-btn.prev {
+  left: 10px;
+}
+
+.slider-nav-btn.next {
+  right: 10px;
+}
+
+.slider-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.slider-nav-btn:disabled:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  transform: translateY(-50%) scale(1);
+}
+
+/* ========== IMAGE COUNTER ========== */
+.image-counter {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 10;
+}
+
+/* ========== DOTS NAVIGATION ========== */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.slider-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ddd;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.slider-dot.active {
   background: #d4a373;
-  border-radius: 10px;
+  width: 12px;
+  height: 12px;
 }
 
+.slider-dot:hover {
+  background: #c49668;
+}
+
+/* ========== PRODUCT INFO DETAILS ========== */
 .product-info-details {
   flex: 1;
   min-width: 300px;
   max-width: 600px;
+}
+
+/* Desktop - Info di kanan, align left */
+@media (min-width: 1024px) {
+  .product-info-details {
+    text-align: left;
+    max-width: none;
+    flex: 1;
+    padding-left: 20px;
+  }
 }
 
 .section-title-details {
@@ -1040,30 +1210,52 @@ footer p {
   transform: translateY(0);
 }
 
+/* ========== MOBILE RESPONSIVE ========== */
 @media (max-width: 768px) {
   .product-section-details {
     flex-direction: column;
     align-items: center;
   }
-  .image-slider-details {
+  
+  .image-slider-container {
     max-width: 100%;
   }
+  
   .product-info-details {
     text-align: left;
     width: 100%;
+    padding-left: 0;
   }
+  
   .page-title-details {
     font-size: 24px;
     margin-top: 50px;
   }
+  
   .product-title-details {
     font-size: 26px;
   }
+  
   .product-price-details {
     font-size: 24px;
   }
+  
   .add-to-cart-details-btn {
     max-width: 100%;
+  }
+  
+  .slider-nav-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+  }
+  
+  .slider-nav-btn.prev {
+    left: 5px;
+  }
+  
+  .slider-nav-btn.next {
+    right: 5px;
   }
 }
   </style>
@@ -1141,35 +1333,43 @@ footer p {
         <!-- Products will be loaded here -->
       </div>
       <!-- Product Details Modal -->
-  <div class="product-details-modal" id="productDetailsModal">
-    <div class="close-details-btn" onclick="closeProductDetails()">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
-    </div>
+<div class="product-details-modal" id="productDetailsModal">
+  <div class="close-details-btn" onclick="closeProductDetails()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 6L6 18M6 6l12 12"/>
+    </svg>
+  </div>
 
-    <h1 class="page-title-details">Product Details</h1>
+  <h1 class="page-title-details">Product Details</h1>
 
-    <div class="product-section-details">
+  <div class="product-section-details">
+    <!-- IMAGE SLIDER KIRI -->
+    <div class="image-slider-container">
       <div class="image-slider-details" id="detailsImageSlider">
         <!-- Images will be loaded here -->
       </div>
+      <button class="slider-nav-btn prev" id="sliderPrevBtn" onclick="changeSlide(-1)">‹</button>
+      <button class="slider-nav-btn next" id="sliderNextBtn" onclick="changeSlide(1)">›</button>
+      <div class="image-counter" id="imageCounter">1 / 1</div>
+      <div class="slider-dots" id="sliderDots"></div>
+    </div>
 
-      <div class="product-info-details">
-        <div class="section-title-details">Title</div>
-        <div class="product-title-details" id="detailsTitle">Product Name</div>
-        
-        <div class="product-price-details" id="detailsPrice">Rp 0</div>
-        
-        <div class="section-title-details">Description</div>
-        <div class="product-description-details" id="detailsDescription">
-          Product description will appear here.
-        </div>
-
-        <button class="add-to-cart-details-btn" id="detailsAddToCartBtn">Add to Cart</button>
+    <!-- PRODUCT INFO KANAN -->
+    <div class="product-info-details">
+      <div class="section-title-details">Title</div>
+      <div class="product-title-details" id="detailsTitle">Product Name</div>
+      
+      <div class="product-price-details" id="detailsPrice">Rp 0</div>
+      
+      <div class="section-title-details">Description</div>
+      <div class="product-description-details" id="detailsDescription">
+        Product description will appear here.
       </div>
+
+      <button class="add-to-cart-details-btn" id="detailsAddToCartBtn">Add to Cart</button>
     </div>
   </div>
+</div>
       <div class="no-results" id="noResults">
         <h3>No Results</h3>
         <p>Try a different keywords</p>
@@ -1254,12 +1454,17 @@ footer p {
   // ================================
 // DATA PRODUK
 // ================================
-  const products = [
+const products = [
   { 
     id: 1, 
     name: "Laskar Pelangi", 
     price: 85000, 
     image: "id-11134207-7rask-m1kd7huecvqp2e.avif",
+    images: [
+      "id-11134207-7rask-m1kd7huecvqp2e.avif",
+      "https://via.placeholder.com/460x360/FF6B6B/FFFFFF?text=Laskar+Pelangi+2",
+      "https://via.placeholder.com/460x360/4ECDC4/FFFFFF?text=Laskar+Pelangi+3"
+    ],
     description: "Gantungan kunci dengan desain inspirasi dari novel Laskar Pelangi. Terbuat dari bahan berkualitas tinggi dengan warna cerah yang eye-catching. Cocok untuk penggemar sastra Indonesia."
   },
   { 
@@ -1267,6 +1472,12 @@ footer p {
     name: "Bumi Manusia", 
     price: 92000, 
     image: "https://via.placeholder.com/150",
+    images: [
+      "https://via.placeholder.com/460x360/95E1D3/FFFFFF?text=Bumi+Manusia+1",
+      "https://via.placeholder.com/460x360/F38181/FFFFFF?text=Bumi+Manusia+2",
+      "https://via.placeholder.com/460x360/AA96DA/FFFFFF?text=Bumi+Manusia+3",
+      "https://via.placeholder.com/460x360/FCBAD3/FFFFFF?text=Bumi+Manusia+4"
+    ],
     description: "Keychain premium dengan tema Bumi Manusia karya Pramoedya Ananta Toer. Desain elegan dengan finishing matte yang memberikan kesan mewah dan berkelas."
   },
   { 
@@ -1274,6 +1485,9 @@ footer p {
     name: "Perahu Kertas", 
     price: 78000, 
     image: "https://via.placeholder.com/150",
+    images: [
+      "https://via.placeholder.com/460x360/A8E6CF/FFFFFF?text=Perahu+Kertas"
+    ],
     description: "Gantungan kunci unik berbentuk perahu kertas mini. Material logam anti karat dengan detail yang halus. Perfect gift untuk teman atau sahabat tersayang."
   },
   { 
@@ -1281,6 +1495,10 @@ footer p {
     name: "Negeri 5 Menara", 
     price: 88000, 
     image: "https://via.placeholder.com/150",
+    images: [
+      "https://via.placeholder.com/460x360/FFD93D/FFFFFF?text=Negeri+5+Menara+1",
+      "https://via.placeholder.com/460x360/6BCB77/FFFFFF?text=Negeri+5+Menara+2"
+    ],
     description: "Keychain eksklusif bertema Negeri 5 Menara dengan detail menara yang artistic. Dilengkapi dengan rantai stainless steel yang kuat dan tahan lama."
   },
   { 
@@ -1288,6 +1506,11 @@ footer p {
     name: "Laskar Pelangi (Summary)", 
     price: 25000, 
     image: "https://via.placeholder.com/150",
+    images: [
+      "https://via.placeholder.com/460x360/C7CEEA/FFFFFF?text=LP+Summary+1",
+      "https://via.placeholder.com/460x360/FFDAC1/FFFFFF?text=LP+Summary+2",
+      "https://via.placeholder.com/460x360/FF9AA2/FFFFFF?text=LP+Summary+3"
+    ],
     description: "Versi ringkas dari Laskar Pelangi keychain dengan desain minimalis namun tetap menarik. Cocok untuk budget-friendly gift tanpa mengurangi kualitas."
   },
   { 
@@ -1295,6 +1518,9 @@ footer p {
     name: "Bumi Manusia (Summary)", 
     price: 27000, 
     image: "https://via.placeholder.com/150",
+    images: [
+      "https://via.placeholder.com/460x360/B5EAD7/FFFFFF?text=BM+Summary"
+    ],
     description: "Gantungan kunci compact dengan tema Bumi Manusia. Desain simpel dan modern, mudah dibawa kemana-mana. Ideal untuk daily use."
   },
   { 
@@ -1302,6 +1528,10 @@ footer p {
     name: "Perahu Kertas (Summary)", 
     price: 22000, 
     image: "https://via.placeholder.com/150",
+    images: [
+      "https://via.placeholder.com/460x360/E2F0CB/FFFFFF?text=PK+Summary+1",
+      "https://via.placeholder.com/460x360/FFDFD3/FFFFFF?text=PK+Summary+2"
+    ],
     description: "Mini version dari Perahu Kertas keychain dengan harga terjangkau. Kualitas tetap terjaga dengan bahan yang awet dan tidak mudah pudar."
   },
   { 
@@ -1309,6 +1539,13 @@ footer p {
     name: "Negeri 5 Menara (Summary)", 
     price: 24000, 
     image: "https://via.placeholder.com/150",
+    images: [
+      "https://via.placeholder.com/460x360/FEC8D8/FFFFFF?text=N5M+Summary+1",
+      "https://via.placeholder.com/460x360/957DAD/FFFFFF?text=N5M+Summary+2",
+      "https://via.placeholder.com/460x360/D291BC/FFFFFF?text=N5M+Summary+3",
+      "https://via.placeholder.com/460x360/FEC8D8/FFFFFF?text=N5M+Summary+4",
+      "https://via.placeholder.com/460x360/E0BBE4/FFFFFF?text=N5M+Summary+5"
+    ],
     description: "Keychain praktis dengan desain terinspirasi dari Negeri 5 Menara. Ringan, compact, dan stylish. Sempurna untuk koleksi atau hadiah budget-friendly."
   },
 ];
@@ -1515,6 +1752,75 @@ function loadProducts() {
 // ================================
 // PRODUCT DETAILS MODAL
 // ================================
+// ================================
+// IMAGE SLIDER VARIABLES
+// ================================
+let currentSlideIndex = 0;
+let totalSlides = 0;
+
+// ================================
+// SLIDER FUNCTIONS
+// ================================
+function changeSlide(direction) {
+  currentSlideIndex += direction;
+  
+  if (currentSlideIndex < 0) {
+    currentSlideIndex = totalSlides - 1;
+  } else if (currentSlideIndex >= totalSlides) {
+    currentSlideIndex = 0;
+  }
+  
+  updateSliderDisplay();
+}
+
+function goToSlide(index) {
+  currentSlideIndex = index;
+  updateSliderDisplay();
+}
+
+function updateSliderDisplay() {
+  const images = document.querySelectorAll('#detailsImageSlider img');
+  const counter = document.getElementById('imageCounter');
+  const prevBtn = document.getElementById('sliderPrevBtn');
+  const nextBtn = document.getElementById('sliderNextBtn');
+  const dots = document.querySelectorAll('.slider-dot');
+  
+  // Update images
+  images.forEach((img, index) => {
+    img.classList.remove('active');
+    if (index === currentSlideIndex) {
+      img.classList.add('active');
+    }
+  });
+  
+  // Update counter
+  if (counter) {
+    counter.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
+  }
+  
+  // Update dots
+  dots.forEach((dot, index) => {
+    dot.classList.remove('active');
+    if (index === currentSlideIndex) {
+      dot.classList.add('active');
+    }
+  });
+  
+  // Hide buttons if only one image
+  if (prevBtn && nextBtn) {
+    if (totalSlides <= 1) {
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+    } else {
+      prevBtn.style.display = 'flex';
+      nextBtn.style.display = 'flex';
+    }
+  }
+}
+
+// ================================
+// UPDATE PRODUCT DETAILS MODAL
+// ================================
 function showProductDetails(productId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
@@ -1524,6 +1830,7 @@ function showProductDetails(productId) {
   const detailsPrice = document.getElementById('detailsPrice');
   const detailsDescription = document.getElementById('detailsDescription');
   const detailsImageSlider = document.getElementById('detailsImageSlider');
+  const sliderDots = document.getElementById('sliderDots');
   const detailsAddToCartBtn = document.getElementById('detailsAddToCartBtn');
 
   if (!modal) return;
@@ -1548,16 +1855,29 @@ function showProductDetails(productId) {
     }
   }
   
- if (detailsDescription) {
-  detailsDescription.textContent = product.description || `${product.name} - Keychain berkualitas tinggi dengan desain minimalis dan elegan.`;
-}
+  if (detailsDescription) {
+    detailsDescription.textContent = product.description || `${product.name} - Keychain berkualitas tinggi dengan desain minimalis dan elegan.`;
+  }
 
- // Set single image
-if (detailsImageSlider) {
-  detailsImageSlider.innerHTML = `
-    <img src="${product.image}" alt="${product.name}">
-  `;
-}
+  // Set multiple images
+  if (detailsImageSlider) {
+    const imagesToShow = product.images || [product.image];
+    totalSlides = imagesToShow.length;
+    currentSlideIndex = 0;
+    
+    detailsImageSlider.innerHTML = imagesToShow.map((img, index) => 
+      `<img src="${img}" alt="${product.name}" class="${index === 0 ? 'active' : ''}">`
+    ).join('');
+    
+    // Create dots
+    if (sliderDots) {
+      sliderDots.innerHTML = imagesToShow.map((_, index) => 
+        `<div class="slider-dot ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></div>`
+      ).join('');
+    }
+    
+    updateSliderDisplay();
+  }
 
   // Set add to cart button
   if (detailsAddToCartBtn) {
@@ -1571,6 +1891,32 @@ if (detailsImageSlider) {
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
+
+function closeProductDetails() {
+  const modal = document.getElementById('productDetailsModal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+    currentSlideIndex = 0;
+    totalSlides = 0;
+  }
+}
+
+// ================================
+// KEYBOARD NAVIGATION
+// ================================
+document.addEventListener('keydown', function(e) {
+  const modal = document.getElementById('productDetailsModal');
+  if (modal && modal.classList.contains('active')) {
+    if (e.key === 'ArrowLeft') {
+      changeSlide(-1);
+    } else if (e.key === 'ArrowRight') {
+      changeSlide(1);
+    } else if (e.key === 'Escape') {
+      closeProductDetails();
+    }
+  }
+});
 
 function closeProductDetails() {
   const modal = document.getElementById('productDetailsModal');
