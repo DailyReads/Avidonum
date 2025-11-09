@@ -2125,10 +2125,10 @@ function updateCartDisplay() {
             <div class="item-info">
               <div class="item-name">${item.name}${sizeText}</div>
               <div class="item-controls">
-                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1, ${item.size === null ? 'null' : `'${item.size}'`})">-</button>
-                <span class="quantity">${item.quantity}</span>
-                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1, ${item.size === null ? 'null' : `'${item.size}'`})">+</button>
-              </div>
+<button class="qty-btn" onclick="updateQuantity(${item.id}, -1, ${sizeParam})">-</button>
+<span class="quantity">${item.quantity}</span>
+<button class="qty-btn" onclick="updateQuantity(${item.id}, 1, ${sizeParam})">+</button>
+                 </div>
             </div>
             <div class="item-price">Rp ${(itemPrice * item.quantity).toLocaleString('id-ID')}</div>
           </div>
@@ -2489,3 +2489,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
