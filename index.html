@@ -1258,6 +1258,209 @@ footer p {
     right: 5px;
   }
 }
+/* ========== SIZE SELECTION MODAL ========== */
+.size-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 3000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.size-modal.active {
+  display: flex;
+}
+
+.size-modal-content {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 450px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.size-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.size-modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+}
+
+.size-modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #999;
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.size-modal-close:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.size-product-info {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.size-product-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.size-product-details {
+  flex: 1;
+}
+
+.size-product-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.size-product-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #d4a373;
+}
+
+.size-selection-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.size-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+@media (max-width: 480px) {
+  .size-options {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.size-option {
+  background: white;
+  border: 2px solid #e0e0e0;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  transition: all 0.3s;
+}
+
+.size-option:hover {
+  border-color: #d4a373;
+  background: #fef9f5;
+  transform: translateY(-2px);
+}
+
+.size-option.selected {
+  background: #d4a373;
+  border-color: #d4a373;
+  color: white;
+}
+
+.size-option.out-of-stock {
+  background: #f5f5f5;
+  border-color: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.size-option.out-of-stock:hover {
+  transform: none;
+  background: #f5f5f5;
+  border-color: #e0e0e0;
+}
+
+.size-confirm-btn {
+  width: 100%;
+  background: #d4a373;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.size-confirm-btn:hover {
+  background: #c49668;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 163, 115, 0.3);
+}
+
+.size-confirm-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.size-error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+  display: none;
+}
   </style>
 </head>
 <body>
@@ -1326,132 +1529,164 @@ footer p {
   <h2>Special Promo</h2>
   <div class="product-grid" id="discountGrid"></div>
 </div>
-    <!-- Products Section -->
-    <div class="section">
-      <h2>Our Products</h2>
-      <div class="product-grid" id="productGrid">
-        <!-- Products will be loaded here -->
-      </div>
-      <!-- Product Details Modal -->
-<div class="product-details-modal" id="productDetailsModal">
-  <div class="close-details-btn" onclick="closeProductDetails()">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M18 6L6 18M6 6l12 12"/>
-    </svg>
+
+<!-- Products Section -->
+<div class="section">
+  <h2>Our Products</h2>
+  <div class="product-grid" id="productGrid">
+    <!-- Products will be loaded here -->
   </div>
 
-  <h1 class="page-title-details">Product Details</h1>
-
-  <div class="product-section-details">
-    <!-- IMAGE SLIDER KIRI -->
-    <div class="image-slider-container">
-      <div class="image-slider-details" id="detailsImageSlider">
-        <!-- Images will be loaded here -->
-      </div>
-      <button class="slider-nav-btn prev" id="sliderPrevBtn" onclick="changeSlide(-1)">‹</button>
-      <button class="slider-nav-btn next" id="sliderNextBtn" onclick="changeSlide(1)">›</button>
-      <div class="image-counter" id="imageCounter">1 / 1</div>
-      <div class="slider-dots" id="sliderDots"></div>
+  <!-- Product Details Modal -->
+  <div class="product-details-modal" id="productDetailsModal">
+    <div class="close-details-btn" onclick="closeProductDetails()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
     </div>
 
-    <!-- PRODUCT INFO KANAN -->
-    <div class="product-info-details">
-      <div class="section-title-details">Title</div>
-      <div class="product-title-details" id="detailsTitle">Product Name</div>
-      
-      <div class="product-price-details" id="detailsPrice">Rp 0</div>
-      
-      <div class="section-title-details">Description</div>
-      <div class="product-description-details" id="detailsDescription">
-        Product description will appear here.
+    <h1 class="page-title-details">Product Details</h1>
+
+    <div class="product-section-details">
+      <!-- IMAGE SLIDER KIRI -->
+      <div class="image-slider-container">
+        <div class="image-slider-details" id="detailsImageSlider">
+          <!-- Images will be loaded here -->
+        </div>
+        <button class="slider-nav-btn prev" id="sliderPrevBtn" onclick="changeSlide(-1)">‹</button>
+        <button class="slider-nav-btn next" id="sliderNextBtn" onclick="changeSlide(1)">›</button>
+        <div class="image-counter" id="imageCounter">1 / 1</div>
+        <div class="slider-dots" id="sliderDots"></div>
       </div>
 
-      <button class="add-to-cart-details-btn" id="detailsAddToCartBtn">Add to Cart</button>
+      <!-- PRODUCT INFO KANAN -->
+      <div class="product-info-details">
+        <div class="section-title-details">Title</div>
+        <div class="product-title-details" id="detailsTitle">Product Name</div>
+
+        <div class="product-price-details" id="detailsPrice">Rp 0</div>
+
+        <div class="section-title-details">Description</div>
+        <div class="product-description-details" id="detailsDescription">
+          Product description will appear here.
+        </div>
+
+        <button class="add-to-cart-details-btn" id="detailsAddToCartBtn">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIZE SELECTION MODAL (TERPISAH, TIDAK DI DALAM MODAL DETAIL!) -->
+  <div class="size-modal" id="sizeModal">
+    <div class="size-modal-content">
+      <div class="size-modal-header">
+        <h2 class="size-modal-title">Select Size</h2>
+        <button class="size-modal-close" onclick="closeSizeModal()">×</button>
+      </div>
+
+      <div class="size-product-info">
+        <img src="" alt="" class="size-product-image" id="sizeProductImage">
+        <div class="size-product-details">
+          <div class="size-product-name" id="sizeProductName"></div>
+          <div class="size-product-price" id="sizeProductPrice"></div>
+        </div>
+      </div>
+
+      <label class="size-selection-label">Choose your size:</label>
+      <div class="size-options" id="sizeOptions"></div>
+
+      <button class="size-confirm-btn" id="sizeConfirmBtn" disabled>
+        Add to Cart
+      </button>
+      <div class="size-error-message" id="sizeErrorMessage">
+        Please select a size
+      </div>
+    </div>
+  </div>
+
+  <!-- No Results Message -->
+  <div class="no-results" id="noResults">
+    <h3>No Results</h3>
+    <p>Try a different keywords</p>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>About Us</h3>
+        <p>Keyloops is a keychain designed with a simple, elegant, and high-quality style. Perfect as an accessory for your keys, bags, or as a special gift.</p>
+      </div>
+
+      <div class="footer-column">
+        <h3>Contact Info</h3>
+        <ul>
+          <li>Phone: +62 823-8205-2250</li>
+          <li>Email: literadia1@gmail.com</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="copyright">
+      <p>&copy; 2025 Sneakrun. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Section -->
+<div class="cart-section" id="cartSection">
+  <div class="cart-header">
+    <button class="close-cart" onclick="toggleCart()">×</button>
+    <h1>Your Cart</h1>
+    <p>Review your items and proceed to checkout</p>
+  </div>
+
+  <div class="cart-content">
+    <div class="customer-form">
+      <h3>Customer Information</h3>
+      <div class="form-row">
+        <input type="text" class="input-field" placeholder="Your Name *" id="customerName">
+        <input type="email" class="input-field" placeholder="Your Email *" id="customerEmail">
+      </div>
+      <div class="promo-section">
+        <input type="text" class="input-field" placeholder="Promo Code (Optional)" id="promoCode">
+        <button class="promo-btn" onclick="applyPromo()">Apply</button>
+        <div id="promoMessage" style="margin-top:10px; font-size:14px; color:green;"></div>
+      </div>
+    </div>
+
+    <div class="receipt-container">
+      <div class="receipt-header">
+        <div class="receipt-title">Order Summary</div>
+        <div class="receipt-subtitle">Sneakrun Store</div>
+      </div>
+
+      <div class="receipt-items" id="cartItems">
+        <div class="empty-cart">
+          <div class="empty-cart-icon">🛒</div>
+          <h3>Your cart is empty</h3>
+          <p>Add some books to get started!</p>
+          <button class="continue-shopping" onclick="toggleCart()">Continue Shopping</button>
+        </div>
+      </div>
+
+      <div class="receipt-summary">
+        <div class="summary-row total">
+          <span>Total Amount</span>
+          <span id="totalAmount">Rp 0</span>
+        </div>
+        <button class="checkout-btn" onclick="sendToWhatsApp()" id="checkoutBtn" disabled>
+          Confirm
+        </button>
+      </div>
     </div>
   </div>
 </div>
-      <div class="no-results" id="noResults">
-        <h3>No Results</h3>
-        <p>Try a different keywords</p>
-      </div>
-    </div>
 
-    <!-- Footer -->
-        <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>About Us</h3>
-                    <p>Keyloops is a keychain designed with a simple, elegant, and high-quality style. Perfect as an accessory for your keys, bags, or as a special gift.</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Contact Info</h3>
-                    <ul>
-                        <li>Phone: +62 823-8205-2250</li>
-                        <li>Email: literadia1@gmail.com</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2025 Sneakrun. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-  <!-- Cart Section -->
-  <div class="cart-section" id="cartSection">
-    <div class="cart-header">
-      <button class="close-cart" onclick="toggleCart()">×</button>
-      <h1>Your Cart</h1>
-      <p>Review your items and proceed to checkout</p>
-    </div>
-    
-    <div class="cart-content">
-      <div class="customer-form">
-        <h3> Customer Information</h3>
-        <div class="form-row">
-          <input type="text" class="input-field" placeholder="Your Name *" id="customerName">
-          <input type="email" class="input-field" placeholder="Your Email *" id="customerEmail">
-        </div>
-        <div class="promo-section">
-          <input type="text" class="input-field" placeholder="Promo Code (Optional)" id="promoCode">
-          <button class="promo-btn" onclick="applyPromo()">Apply</button>
-          <div id="promoMessage" style="margin-top:10px; font-size:14px; color:green;"></div>
-        </div>
-      </div>
-      
-      <div class="receipt-container">
-        <div class="receipt-header">
-          <div class="receipt-title"> Order Summary</div>
-          <div class="receipt-subtitle">Sneakrun Store</div>
-        </div>
-        
-        <div class="receipt-items" id="cartItems">
-          <div class="empty-cart">
-            <div class="empty-cart-icon">🛒</div>
-            <h3>Your cart is empty</h3>
-            <p>Add some books to get started!</p>
-            <button class="continue-shopping" onclick="toggleCart()">Continue Shopping</button>
-          </div>
-        </div>
-        
-        <div class="receipt-summary">
-          <div class="summary-row total">
-            <span>Total Amount</span>
-            <span id="totalAmount">Rp 0</span>
-          </div>
-          <button class="checkout-btn" onclick="sendToWhatsApp()" id="checkoutBtn" disabled>
-            Confirm
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-  // ================================
+<script>
+// ================================
 // DATA PRODUK
 // ================================
 const products = [
@@ -1465,174 +1700,195 @@ const products = [
       "https://via.placeholder.com/460x360/FF6B6B/FFFFFF?text=Laskar+Pelangi+2",
       "https://via.placeholder.com/460x360/4ECDC4/FFFFFF?text=Laskar+Pelangi+3"
     ],
-    description: "Gantungan kunci dengan desain inspirasi dari novel Laskar Pelangi. Terbuat dari bahan berkualitas tinggi dengan warna cerah yang eye-catching. Cocok untuk penggemar sastra Indonesia."
+    sizes: [38, 39, 40, 41, 42, 43, 44],
+    description: "Sepatu sneakers premium dengan desain terinspirasi dari novel Laskar Pelangi. Material upper berkualitas tinggi dengan cushioning yang nyaman untuk aktivitas sehari-hari. Outsole karet anti-slip memberikan traksi maksimal. Cocok untuk gaya kasual maupun semi-formal."
   },
   { 
     id: 2, 
     name: "Bumi Manusia", 
     price: 92000, 
-    image: "https://via.placeholder.com/150",
+    image: "https://via.placeholder.com/150/95E1D3/FFFFFF?text=Bumi+Manusia",
     images: [
       "https://via.placeholder.com/460x360/95E1D3/FFFFFF?text=Bumi+Manusia+1",
       "https://via.placeholder.com/460x360/F38181/FFFFFF?text=Bumi+Manusia+2",
       "https://via.placeholder.com/460x360/AA96DA/FFFFFF?text=Bumi+Manusia+3",
       "https://via.placeholder.com/460x360/FCBAD3/FFFFFF?text=Bumi+Manusia+4"
     ],
-    description: "Keychain premium dengan tema Bumi Manusia karya Pramoedya Ananta Toer. Desain elegan dengan finishing matte yang memberikan kesan mewah dan berkelas."
+    sizes: [36, 37, 38, 39, 40, 41, 42, 43],
+    description: "Sneakers eksklusif dengan tema Bumi Manusia karya Pramoedya Ananta Toer. Desain elegan dengan finishing premium yang memberikan kesan mewah dan berkelas. Teknologi breathable mesh untuk sirkulasi udara optimal. Perfect choice untuk pecinta sastra dan fashion."
   },
   { 
     id: 3, 
     name: "Perahu Kertas", 
     price: 78000, 
-    image: "https://via.placeholder.com/150",
+    image: "https://via.placeholder.com/150/A8E6CF/FFFFFF?text=Perahu+Kertas",
     images: [
-      "https://via.placeholder.com/460x360/A8E6CF/FFFFFF?text=Perahu+Kertas"
+      "https://via.placeholder.com/460x360/A8E6CF/FFFFFF?text=Perahu+Kertas+1",
+      "https://via.placeholder.com/460x360/FFD93D/FFFFFF?text=Perahu+Kertas+2"
     ],
-    description: "Gantungan kunci unik berbentuk perahu kertas mini. Material logam anti karat dengan detail yang halus. Perfect gift untuk teman atau sahabat tersayang."
+    sizes: [37, 38, 39, 40, 41, 42],
+    description: "Sepatu casual dengan desain unik berbentuk perahu kertas yang playful namun tetap stylish. Material canvas breathable dengan insole empuk untuk kenyamanan maksimal. Lightweight dan flexible, cocok untuk aktivitas outdoor maupun hangout santai bersama teman."
   },
   { 
     id: 4, 
     name: "Negeri 5 Menara", 
     price: 88000, 
-    image: "https://via.placeholder.com/150",
+    image: "https://via.placeholder.com/150/FFD93D/FFFFFF?text=Negeri+5+Menara",
     images: [
       "https://via.placeholder.com/460x360/FFD93D/FFFFFF?text=Negeri+5+Menara+1",
-      "https://via.placeholder.com/460x360/6BCB77/FFFFFF?text=Negeri+5+Menara+2"
+      "https://via.placeholder.com/460x360/6BCB77/FFFFFF?text=Negeri+5+Menara+2",
+      "https://via.placeholder.com/460x360/4D96FF/FFFFFF?text=Negeri+5+Menara+3"
     ],
-    description: "Keychain eksklusif bertema Negeri 5 Menara dengan detail menara yang artistic. Dilengkapi dengan rantai stainless steel yang kuat dan tahan lama."
+    sizes: [38, 39, 40, 41, 42, 43, 44, 45],
+    description: "Sneakers eksklusif bertema Negeri 5 Menara dengan detail artistic yang memukau. Dilengkapi dengan midsole EVA yang empuk dan durable. Upper synthetic leather mudah dibersihkan. Desain timeless yang cocok untuk berbagai occasion, dari casual hingga semi-formal."
   },
   { 
     id: 5, 
     name: "Laskar Pelangi (Summary)", 
     price: 25000, 
-    image: "https://via.placeholder.com/150",
+    image: "https://via.placeholder.com/150/C7CEEA/FFFFFF?text=LP+Summary",
     images: [
       "https://via.placeholder.com/460x360/C7CEEA/FFFFFF?text=LP+Summary+1",
       "https://via.placeholder.com/460x360/FFDAC1/FFFFFF?text=LP+Summary+2",
       "https://via.placeholder.com/460x360/FF9AA2/FFFFFF?text=LP+Summary+3"
     ],
-    description: "Versi ringkas dari Laskar Pelangi keychain dengan desain minimalis namun tetap menarik. Cocok untuk budget-friendly gift tanpa mengurangi kualitas."
+    sizes: [36, 37, 38, 39, 40, 41, 42],
+    description: "Versi budget-friendly dari Laskar Pelangi sneakers dengan desain minimalis namun tetap eye-catching. Material berkualitas dengan harga terjangkau. Canvas upper yang breathable dan nyaman dipakai seharian. Perfect starter sneakers untuk koleksi sepatu kamu!"
   },
   { 
     id: 6, 
     name: "Bumi Manusia (Summary)", 
     price: 27000, 
-    image: "https://via.placeholder.com/150",
+    image: "https://via.placeholder.com/150/B5EAD7/FFFFFF?text=BM+Summary",
     images: [
-      "https://via.placeholder.com/460x360/B5EAD7/FFFFFF?text=BM+Summary"
+      "https://via.placeholder.com/460x360/B5EAD7/FFFFFF?text=BM+Summary+1",
+      "https://via.placeholder.com/460x360/E8DFF5/FFFFFF?text=BM+Summary+2"
     ],
-    description: "Gantungan kunci compact dengan tema Bumi Manusia. Desain simpel dan modern, mudah dibawa kemana-mana. Ideal untuk daily use."
+    sizes: [37, 38, 39, 40, 41, 42, 43],
+    description: "Sepatu compact dengan tema Bumi Manusia dalam versi simplified. Desain simpel dan modern yang mudah di-mix and match dengan berbagai outfit. Rubber outsole yang grippy dan tahan lama. Ideal untuk daily use dengan budget yang ramah di kantong. Great value for money!"
   },
   { 
     id: 7, 
     name: "Perahu Kertas (Summary)", 
     price: 22000, 
-    image: "https://via.placeholder.com/150",
+    image: "https://via.placeholder.com/150/E2F0CB/FFFFFF?text=PK+Summary",
     images: [
       "https://via.placeholder.com/460x360/E2F0CB/FFFFFF?text=PK+Summary+1",
-      "https://via.placeholder.com/460x360/FFDFD3/FFFFFF?text=PK+Summary+2"
+      "https://via.placeholder.com/460x360/FFDFD3/FFFFFF?text=PK+Summary+2",
+      "https://via.placeholder.com/460x360/FEC8D8/FFFFFF?text=PK+Summary+3"
     ],
-    description: "Mini version dari Perahu Kertas keychain dengan harga terjangkau. Kualitas tetap terjaga dengan bahan yang awet dan tidak mudah pudar."
+    sizes: [36, 37, 38, 39, 40, 41],
+    description: "Mini version dari Perahu Kertas sneakers dengan harga super affordable. Kualitas tetap terjaga dengan material yang awet dan tidak mudah pudar. Lightweight construction untuk kenyamanan maksimal. Cocok untuk pelajar dan mahasiswa yang ingin tampil stylish dengan budget terbatas."
   },
   { 
     id: 8, 
     name: "Negeri 5 Menara (Summary)", 
     price: 24000, 
-    image: "https://via.placeholder.com/150",
+    image: "https://via.placeholder.com/150/FEC8D8/FFFFFF?text=N5M+Summary",
     images: [
       "https://via.placeholder.com/460x360/FEC8D8/FFFFFF?text=N5M+Summary+1",
       "https://via.placeholder.com/460x360/957DAD/FFFFFF?text=N5M+Summary+2",
       "https://via.placeholder.com/460x360/D291BC/FFFFFF?text=N5M+Summary+3",
-      "https://via.placeholder.com/460x360/FEC8D8/FFFFFF?text=N5M+Summary+4",
-      "https://via.placeholder.com/460x360/E0BBE4/FFFFFF?text=N5M+Summary+5"
+      "https://via.placeholder.com/460x360/E0BBE4/FFFFFF?text=N5M+Summary+4",
+      "https://via.placeholder.com/460x360/FFDAB9/FFFFFF?text=N5M+Summary+5"
     ],
-    description: "Keychain praktis dengan desain terinspirasi dari Negeri 5 Menara. Ringan, compact, dan stylish. Sempurna untuk koleksi atau hadiah budget-friendly."
-  },
+    sizes: [38, 39, 40, 41, 42, 43],
+    description: "Sepatu praktis dengan desain terinspirasi dari Negeri 5 Menara dalam versi ekonomis. Ringan, compact, dan stylish dengan color options yang beragam. Padded collar untuk ankle support yang lebih baik. Sempurna untuk koleksi atau sebagai hadiah budget-friendly tanpa mengorbankan style dan kenyamanan."
+  }
 ];
 
 // ================================
-// CONFIG DISKON
+// CONFIG DISKON & PROMO
 // ================================
 const discountRate = 20;
-const discountProducts = [1, 2, 5]; // ID produk yang dapat diskon
-
-// ================================
-// GLOBAL VARIABLES
-// ================================
-let cart = [];
-let currentDiscount = 0;
-let appliedPromo = null;
-let isDiscountActive = true; // Status apakah diskon masih berlaku
-
+const discountProducts = [1, 2, 5]; // ID produk diskon
+let isDiscountActive = true;
 const promoList = {
   "DISKON20": { type: "percent", value: 20 },
   "GAG123": { type: "percent", value: 5 }
 };
 
 // ================================
-// COUNTDOWN TIMER
+// GLOBAL STATE
+// ================================
+let cart = [];
+let currentDiscount = 0;
+let appliedPromo = null;
+let selectedSize = null;
+let currentProductForSize = null;
+let timer = null;
+
+// ================================
+// COUNTDOWN & DISKON STATUS
 // ================================
 const targetDate = new Date("2025-12-26T19:40:00").getTime();
-let timer = null;
 
 function updateCountdown() {
   const now = new Date().getTime();
   const distance = targetDate - now;
-
   if (distance < 0) {
-    const countdownTitle = document.querySelector(".countdown-title");
-    const countdownElement = document.getElementById("countdown");
-    
-    if (countdownTitle) countdownTitle.textContent = "Promo berakhir 😢";
-    if (countdownElement) countdownElement.style.display = "none";
-    
-    // Set status diskon menjadi tidak aktif
+    document.querySelector(".countdown-title").textContent = "Promo berakhir 😢";
+    document.getElementById("countdown").style.display = "none";
     isDiscountActive = false;
-    
-    // Sembunyikan section diskon
     hideDiscountDisplay();
-    
-    // Reload produk untuk menghilangkan harga diskon
     loadProducts();
-    
+    loadDiscountProducts();
     if (timer) clearInterval(timer);
     return;
   }
-
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));
   const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  document.getElementById("days").textContent = days.toString().padStart(2, '0');
+  document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
+  document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
+  document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+}
 
-  const daysEl = document.getElementById("days");
-  const hoursEl = document.getElementById("hours");
-  const minutesEl = document.getElementById("minutes");
-  const secondsEl = document.getElementById("seconds");
-
-  if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
-  if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
-  if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
-  if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+function hideDiscountDisplay() {
+  const sec = document.getElementById("discountSection");
+  if (sec) sec.style.display = "none";
 }
 
 // ================================
-// LOAD PRODUK DISKON
+// RENDERING
 // ================================
+function loadProducts() {
+  const grid = document.getElementById('productGrid');
+  if (!grid) return;
+
+  grid.innerHTML = products.map(product => {
+    const isDiscount = isDiscountActive && discountProducts.includes(product.id);
+    const finalPrice = isDiscount ? Math.round(product.price * (1 - discountRate / 100)) : product.price;
+    return `
+      <div class="product-card" data-name="${product.name.toLowerCase()}">
+        <img src="${product.image}" alt="${product.name}" loading="lazy">
+        <div class="product-name">${product.name}</div>
+        <div class="product-price">
+          ${isDiscount 
+            ? `<s>Rp ${product.price.toLocaleString('id-ID')}</s> 
+               <strong>Rp ${finalPrice.toLocaleString('id-ID')}</strong>`
+            : `Rp ${product.price.toLocaleString('id-ID')}`
+          }
+        </div>
+        ${isDiscount ? `<span class="product-badge">Promo</span>` : ''}
+        <div class="product-actions">
+          <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
+          <button class="details-btn-product" onclick="showProductDetails(${product.id})">View Details</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 function loadDiscountProducts() {
   const grid = document.getElementById("discountGrid");
-  if (!grid) return;
-  
-  if (!isDiscountActive) {
+  if (!grid || !isDiscountActive) {
+    if (grid) grid.innerHTML = '';
     return;
   }
-  
   const filtered = products.filter(p => discountProducts.includes(p.id));
-
-  if (filtered.length === 0) {
-    grid.innerHTML = '<p style="text-align:center; color:#666;">Tidak ada produk diskon tersedia</p>';
-    return;
-  }
-
   grid.innerHTML = filtered.map(product => {
     const discountPrice = Math.round(product.price * (1 - discountRate / 100));
     return `
@@ -1641,7 +1897,7 @@ function loadDiscountProducts() {
         <div class="product-name">${product.name}</div>
         <div class="product-price">
           <s>Rp ${product.price.toLocaleString('id-ID')}</s> 
-          <strong style="color:black;">Rp ${discountPrice.toLocaleString('id-ID')}</strong>
+          <strong>Rp ${discountPrice.toLocaleString('id-ID')}</strong>
         </div>
         <span class="product-badge">Promo</span>
         <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
@@ -1651,395 +1907,157 @@ function loadDiscountProducts() {
 }
 
 // ================================
-// HIDE DISKON DISPLAY
+// SIZE MODAL
 // ================================
-function hideDiscountDisplay() {
-  const discountSection = document.getElementById("discountSection");
-  if (discountSection) {
-    discountSection.style.display = "none";
-  }
-}
-
-// ================================
-// LOAD PRODUK UTAMA (TERMASUK SPECIAL PROMO)
-// ================================
-function loadProducts() {
-  const grid = document.getElementById('productGrid');
-  if (!grid) return;
-
-  if (products.length === 0) {
-    grid.innerHTML = '<p style="text-align:center; color:#666;">Tidak ada produk tersedia</p>';
-    return;
-  }
-
-  grid.innerHTML = products.map(product => {
-    // Cek apakah produk termasuk special promo
-    const isDiscount = isDiscountActive && discountProducts.includes(product.id);
-    const discountPrice = isDiscount
-      ? Math.round(product.price * (1 - discountRate / 100))
-      : product.price;
-
-    return `
-      <div class="product-card" data-name="${product.name.toLowerCase()}">
-        <div class="product-image-wrapper">
-          <img src="${product.image}" alt="${product.name}" loading="lazy">
-          ${isDiscount ? `<span class="product-badge promo-badge">Special Promo</span>` : ``}
-        </div>
-
-        <div class="product-info">
-          <div class="product-name">${product.name}</div>
-          <div class="product-price">
-            ${isDiscount 
-              ? `<s>Rp ${product.price.toLocaleString('id-ID')}</s> 
-                 <strong style="color:black;">Rp ${discountPrice.toLocaleString('id-ID')}</strong>`
-              : `Rp ${product.price.toLocaleString('id-ID')}`
-            }
-          </div>
-
-          <div class="product-actions">
-            <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
-           <button class="details-btn-product" onclick="showProductDetails(${product.id})">View Details</button>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-// ================================
-// LOAD PRODUK UTAMA (TANPA BADGE CATEGORY)
-// ================================
-function loadProducts() {
-  const grid = document.getElementById('productGrid');
-  if (!grid) return;
-
-  if (products.length === 0) {
-    grid.innerHTML = '<p style="text-align:center; color:#666;">Tidak ada produk tersedia</p>';
-    return;
-  }
-
-  grid.innerHTML = products.map(product => {
-    // Cek apakah produk dapat diskon DAN diskon masih aktif
-    const isDiscount = isDiscountActive && discountProducts.includes(product.id);
-    const discountPrice = isDiscount
-      ? Math.round(product.price * (1 - discountRate / 100))
-      : product.price;
-
-    return `
-      <div class="product-card" data-name="${product.name.toLowerCase()}">
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
-        <div class="product-name">${product.name}</div>
-        <div class="product-price">
-          ${isDiscount 
-            ? `<s>Rp ${product.price.toLocaleString('id-ID')}</s> 
-               <strong style="color:black;">Rp ${discountPrice.toLocaleString('id-ID')}</strong>`
-            : `Rp ${product.price.toLocaleString('id-ID')}`
-          }
-        </div>
-        ${isDiscount 
-          ? `<span class="product-badge">Promo</span>` 
-          : ``
-        }
-        <div class="product-actions">
-          <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
-         <button class="details-btn-product" onclick="showProductDetails(${product.id})">View Details</button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-// ================================
-// PRODUCT DETAILS MODAL
-// ================================
-// ================================
-// IMAGE SLIDER VARIABLES
-// ================================
-let currentSlideIndex = 0;
-let totalSlides = 0;
-
-// ================================
-// SLIDER FUNCTIONS
-// ================================
-function changeSlide(direction) {
-  currentSlideIndex += direction;
-  
-  if (currentSlideIndex < 0) {
-    currentSlideIndex = totalSlides - 1;
-  } else if (currentSlideIndex >= totalSlides) {
-    currentSlideIndex = 0;
-  }
-  
-  updateSliderDisplay();
-}
-
-function goToSlide(index) {
-  currentSlideIndex = index;
-  updateSliderDisplay();
-}
-
-function updateSliderDisplay() {
-  const images = document.querySelectorAll('#detailsImageSlider img');
-  const counter = document.getElementById('imageCounter');
-  const prevBtn = document.getElementById('sliderPrevBtn');
-  const nextBtn = document.getElementById('sliderNextBtn');
-  const dots = document.querySelectorAll('.slider-dot');
-  
-  // Update images
-  images.forEach((img, index) => {
-    img.classList.remove('active');
-    if (index === currentSlideIndex) {
-      img.classList.add('active');
-    }
-  });
-  
-  // Update counter
-  if (counter) {
-    counter.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
-  }
-  
-  // Update dots
-  dots.forEach((dot, index) => {
-    dot.classList.remove('active');
-    if (index === currentSlideIndex) {
-      dot.classList.add('active');
-    }
-  });
-  
-  // Hide buttons if only one image
-  if (prevBtn && nextBtn) {
-    if (totalSlides <= 1) {
-      prevBtn.style.display = 'none';
-      nextBtn.style.display = 'none';
-    } else {
-      prevBtn.style.display = 'flex';
-      nextBtn.style.display = 'flex';
-    }
-  }
-}
-
-// ================================
-// UPDATE PRODUCT DETAILS MODAL
-// ================================
-function showProductDetails(productId) {
+function showSizeModal(productId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
 
-  const modal = document.getElementById('productDetailsModal');
-  const detailsTitle = document.getElementById('detailsTitle');
-  const detailsPrice = document.getElementById('detailsPrice');
-  const detailsDescription = document.getElementById('detailsDescription');
-  const detailsImageSlider = document.getElementById('detailsImageSlider');
-  const sliderDots = document.getElementById('sliderDots');
-  const detailsAddToCartBtn = document.getElementById('detailsAddToCartBtn');
+  // Jika produk tidak punya size, langsung add
+  if (!product.sizes || product.sizes.length === 0) {
+    addToCartDirectly(productId);
+    return;
+  }
 
-  if (!modal) return;
+  currentProductForSize = product;
+  selectedSize = null;
 
-  // Set product info
-  if (detailsTitle) detailsTitle.textContent = product.name;
-  
-  // Check if product has discount
+  const modal = document.getElementById('sizeModal');
+  const img = document.getElementById('sizeProductImage');
+  const name = document.getElementById('sizeProductName');
+  const price = document.getElementById('sizeProductPrice');
+  const opts = document.getElementById('sizeOptions');
+  const btn = document.getElementById('sizeConfirmBtn');
+  const err = document.getElementById('sizeErrorMessage');
+
+  if (img) img.src = product.image;
+  if (name) name.textContent = product.name;
+
   const isDiscount = isDiscountActive && discountProducts.includes(productId);
-  const finalPrice = isDiscount 
-    ? Math.round(product.price * (1 - discountRate / 100))
-    : product.price;
-  
-  if (detailsPrice) {
-    if (isDiscount) {
-      detailsPrice.innerHTML = `
-        <s style="color: #999; font-size: 20px;">Rp ${product.price.toLocaleString('id-ID')}</s><br>
-        Rp ${finalPrice.toLocaleString('id-ID')}
-      `;
-    } else {
-      detailsPrice.textContent = `Rp ${product.price.toLocaleString('id-ID')}`;
-    }
-  }
-  
-  if (detailsDescription) {
-    detailsDescription.textContent = product.description || `${product.name} - Keychain berkualitas tinggi dengan desain minimalis dan elegan.`;
+  const finalPrice = isDiscount ? Math.round(product.price * (1 - discountRate / 100)) : product.price;
+  if (price) {
+    price.innerHTML = isDiscount
+      ? `<s style="color:#999;font-size:14px;">Rp ${product.price.toLocaleString('id-ID')}</s><br>Rp ${finalPrice.toLocaleString('id-ID')}`
+      : `Rp ${product.price.toLocaleString('id-ID')}`;
   }
 
-  // Set multiple images
-  if (detailsImageSlider) {
-    const imagesToShow = product.images || [product.image];
-    totalSlides = imagesToShow.length;
-    currentSlideIndex = 0;
-    
-    detailsImageSlider.innerHTML = imagesToShow.map((img, index) => 
-      `<img src="${img}" alt="${product.name}" class="${index === 0 ? 'active' : ''}">`
-    ).join('');
-    
-    // Create dots
-    if (sliderDots) {
-      sliderDots.innerHTML = imagesToShow.map((_, index) => 
-        `<div class="slider-dot ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></div>`
-      ).join('');
-    }
-    
-    updateSliderDisplay();
+  // ✅ Buat size options dengan event listener DOM-based (lebih aman)
+  if (opts) {
+    opts.innerHTML = '';
+    product.sizes.forEach(size => {
+      const el = document.createElement('div');
+      el.className = 'size-option';
+      el.textContent = size;
+      el.addEventListener('click', () => selectSize(size));
+      opts.appendChild(el);
+    });
   }
 
-  // Set add to cart button
-  if (detailsAddToCartBtn) {
-    detailsAddToCartBtn.onclick = function() {
-      addToCart(productId);
-      closeProductDetails();
-    };
+  if (btn) {
+    btn.disabled = true;
+    btn.onclick = confirmSizeSelection;
   }
+  if (err) err.style.display = 'none';
 
-  // Show modal
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
-function closeProductDetails() {
-  const modal = document.getElementById('productDetailsModal');
+function selectSize(size) {
+  selectedSize = size;
+
+  // UI update: highlight selected
+  document.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected'));
+  const selectedEl = Array.from(document.querySelectorAll('.size-option'))
+    .find(el => el.textContent.trim() === size.toString());
+  if (selectedEl) selectedEl.classList.add('selected');
+
+  // Enable button & hide error
+  const btn = document.getElementById('sizeConfirmBtn');
+  const err = document.getElementById('sizeErrorMessage');
+  if (btn) btn.disabled = false;
+  if (err) err.style.display = 'none';
+}
+
+function confirmSizeSelection() {
+  if (!selectedSize || !currentProductForSize) {
+    const err = document.getElementById('sizeErrorMessage');
+    if (err) {
+      err.textContent = 'Please select a size';
+      err.style.display = 'block';
+    }
+    return;
+  }
+  addToCartWithSize(currentProductForSize.id, selectedSize);
+  closeSizeModal();
+}
+
+function closeSizeModal() {
+  const modal = document.getElementById('sizeModal');
   if (modal) {
     modal.classList.remove('active');
     document.body.style.overflow = 'auto';
-    currentSlideIndex = 0;
-    totalSlides = 0;
   }
+  selectedSize = null;
+  currentProductForSize = null;
 }
 
-// ================================
-// KEYBOARD NAVIGATION
-// ================================
-document.addEventListener('keydown', function(e) {
-  const modal = document.getElementById('productDetailsModal');
-  if (modal && modal.classList.contains('active')) {
-    if (e.key === 'ArrowLeft') {
-      changeSlide(-1);
-    } else if (e.key === 'ArrowRight') {
-      changeSlide(1);
-    } else if (e.key === 'Escape') {
-      closeProductDetails();
-    }
-  }
-});
-
-function closeProductDetails() {
-  const modal = document.getElementById('productDetailsModal');
-  if (modal) {
-    modal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-  }
-}
-// ================================
-// SEARCH FUNCTIONALITY
-// ================================
-function searchKeychain() {
-  const searchInput = document.getElementById('searchInput');
-  if (!searchInput) return;
-  
-  const query = searchInput.value.toLowerCase();
-  const cards = document.querySelectorAll('.product-card');
-  const clearBtn = document.getElementById('searchClear');
-  const noResults = document.getElementById('noResults');
-  let hasResults = false;
-
-  cards.forEach(card => {
-    const name = card.getAttribute('data-name');
-    if (name && name.includes(query)) {
-      card.classList.remove('hidden');
-      hasResults = true;
-    } else {
-      card.classList.add('hidden');
-    }
-  });
-
-  if (clearBtn) clearBtn.style.display = query ? 'block' : 'none';
-  if (noResults) noResults.style.display = (!hasResults && query) ? 'block' : 'none';
-}
-
-function clearSearch() {
-  const searchInput = document.getElementById('searchInput');
-  const clearBtn = document.getElementById('searchClear');
-  const noResults = document.getElementById('noResults');
-  
-  if (searchInput) searchInput.value = '';
-  if (clearBtn) clearBtn.style.display = 'none';
-  if (noResults) noResults.style.display = 'none';
-  
-  document.querySelectorAll('.product-card').forEach(card => {
-    card.classList.remove('hidden');
-  });
-}
-// ================================
-// LOCALSTORAGE FUNCTIONS
-// ================================
-function saveCartToLocalStorage() {
-  localStorage.setItem('literadiaCart', JSON.stringify(cart));
-  localStorage.setItem('literadiaPromo', JSON.stringify(appliedPromo));
-  localStorage.setItem('literadiaDiscount', currentDiscount.toString());
-}
-
-function loadCartFromLocalStorage() {
-  const savedCart = localStorage.getItem('literadiaCart');
-  const savedPromo = localStorage.getItem('literadiaPromo');
-  const savedDiscount = localStorage.getItem('literadiaDiscount');
-  
-  if (savedCart) {
-    cart = JSON.parse(savedCart);
-  }
-  
-  if (savedPromo) {
-    appliedPromo = JSON.parse(savedPromo);
-  }
-  
-  if (savedDiscount) {
-    currentDiscount = parseFloat(savedDiscount);
-  }
-}
-
-function clearCartFromLocalStorage() {
-  localStorage.removeItem('literadiaCart');
-  localStorage.removeItem('literadiaPromo');
-  localStorage.removeItem('literadiaDiscount');
-}
-
-// ================================
-// CART FUNCTIONALITY (DENGAN LOCALSTORAGE)
-// ================================
+// ✅ FUNGSI UTAMA: Dipanggil dari tombol "Add to Cart"
 function addToCart(productId) {
+  showSizeModal(productId); // ✅ ini satu-satunya versi yang dipakai
+}
+
+// Jika produk tanpa size
+function addToCartDirectly(productId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
-  
-  // Cek apakah produk mendapat diskon DAN diskon masih aktif
   const isDiscount = isDiscountActive && discountProducts.includes(productId);
-  const finalPrice = isDiscount 
-    ? Math.round(product.price * (1 - discountRate / 100))
-    : product.price;
-  
-  const existingItem = cart.find(item => item.id === productId);
+  const finalPrice = isDiscount ? Math.round(product.price * (1 - discountRate / 100)) : product.price;
 
+  const existingItem = cart.find(item => item.id === productId && item.size == null);
   if (existingItem) {
     existingItem.quantity += 1;
   } else {
-    cart.push({ 
-      ...product, 
+    cart.push({
+      ...product,
       quantity: 1,
-      finalPrice: finalPrice
+      finalPrice,
+      size: null
     });
   }
 
-  saveCartToLocalStorage(); // SIMPAN KE LOCALSTORAGE
+  saveCartToLocalStorage();
   updateCartDisplay();
   showNotification(`${product.name} added to cart!`);
 }
 
-function updateQuantity(productId, change) {
-  const item = cart.find(item => item.id === productId);
-  if (item) {
-    item.quantity += change;
-    if (item.quantity <= 0) {
-      cart = cart.filter(item => item.id !== productId);
-    }
+// Dengan size
+function addToCartWithSize(productId, size) {
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+  const isDiscount = isDiscountActive && discountProducts.includes(productId);
+  const finalPrice = isDiscount ? Math.round(product.price * (1 - discountRate / 100)) : product.price;
+
+  const existingItem = cart.find(item => item.id === productId && item.size === size);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({
+      ...product,
+      quantity: 1,
+      finalPrice,
+      size
+    });
   }
-  saveCartToLocalStorage(); // SIMPAN KE LOCALSTORAGE
+
+  saveCartToLocalStorage();
   updateCartDisplay();
+  showNotification(`${product.name} (Size ${size}) added to cart!`);
 }
 
+// ================================
+// CART DISPLAY & UPDATE
+// ================================
 function updateCartDisplay() {
   const cartCount = document.getElementById('cartCount');
   const cartItems = document.getElementById('cartItems');
@@ -2050,15 +2068,13 @@ function updateCartDisplay() {
   const subtotal = cart.reduce((sum, item) => sum + ((item.finalPrice || item.price) * item.quantity), 0);
   const total = subtotal - (subtotal * currentDiscount / 100);
 
+  // Cart badge
   if (cartCount) {
-    if (totalItems > 0) {
-      cartCount.textContent = totalItems;
-      cartCount.style.display = 'flex';
-    } else {
-      cartCount.style.display = 'none';
-    }
+    cartCount.textContent = totalItems;
+    cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
   }
 
+  // Items display
   if (cartItems) {
     if (cart.length === 0) {
       cartItems.innerHTML = `
@@ -2073,15 +2089,16 @@ function updateCartDisplay() {
     } else {
       cartItems.innerHTML = cart.map(item => {
         const itemPrice = item.finalPrice || item.price;
+        const sizeText = item.size ? `<div style="font-size:13px;color:#666;margin-top:3px;">Size: ${item.size}</div>` : '';
         return `
           <div class="receipt-item">
             <img src="${item.image}" alt="${item.name}" class="item-image">
             <div class="item-info">
-              <div class="item-name">${item.name}</div>
+              <div class="item-name">${item.name}${sizeText}</div>
               <div class="item-controls">
-                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1, ${item.size === null ? 'null' : `'${item.size}'`})">-</button>
                 <span class="quantity">${item.quantity}</span>
-                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1, ${item.size === null ? 'null' : `'${item.size}'`})">+</button>
               </div>
             </div>
             <div class="item-price">Rp ${(itemPrice * item.quantity).toLocaleString('id-ID')}</div>
@@ -2097,76 +2114,85 @@ function updateCartDisplay() {
   }
 }
 
-function toggleCart() {
-  const cartSection = document.getElementById('cartSection');
-  const mainSection = document.querySelector('.main-section');
-  
-  if (!cartSection) return;
-  
-  if (cartSection.style.display === 'block') {
-    cartSection.style.display = 'none';
-    if (mainSection) mainSection.style.display = 'block';
-    document.body.style.overflow = 'auto';
-  } else {
-    cartSection.style.display = 'block';
-    if (mainSection) mainSection.style.display = 'none';
-    document.body.style.overflow = 'hidden';
+function updateQuantity(productId, change, size = null) {
+  const item = cart.find(i => i.id === productId && (size === null || i.size === size));
+  if (item) {
+    item.quantity += change;
+    if (item.quantity <= 0) {
+      cart = cart.filter(i => !(i.id === productId && (size === null || i.size === size)));
+    }
   }
+  saveCartToLocalStorage();
+  updateCartDisplay();
 }
 
 // ================================
-// PROMO CODE (DENGAN LOCALSTORAGE)
+// LOCALSTORAGE
+// ================================
+function saveCartToLocalStorage() {
+  localStorage.setItem('literadiaCart', JSON.stringify(cart));
+  localStorage.setItem('literadiaPromo', JSON.stringify(appliedPromo));
+  localStorage.setItem('literadiaDiscount', currentDiscount.toString());
+}
+
+function loadCartFromLocalStorage() {
+  const savedCart = localStorage.getItem('literadiaCart');
+  const savedPromo = localStorage.getItem('literadiaPromo');
+  const savedDiscount = localStorage.getItem('literadiaDiscount');
+  
+  if (savedCart) cart = JSON.parse(savedCart);
+  if (savedPromo) appliedPromo = JSON.parse(savedPromo);
+  if (savedDiscount) currentDiscount = parseFloat(savedDiscount);
+}
+
+function clearCartFromLocalStorage() {
+  localStorage.removeItem('literadiaCart');
+  localStorage.removeItem('literadiaPromo');
+  localStorage.removeItem('literadiaDiscount');
+}
+
+// ================================
+// PROMO
 // ================================
 function applyPromo() {
-  const promoCodeInput = document.getElementById("promoCode");
-  const promoMessage = document.getElementById("promoMessage");
-  
-  if (!promoCodeInput || !promoMessage) return;
-  
-  let code = promoCodeInput.value.trim().toUpperCase();
+  const input = document.getElementById("promoCode");
+  const msg = document.getElementById("promoMessage");
+  if (!input || !msg) return;
+
+  const code = input.value.trim().toUpperCase();
+  input.value = '';
 
   if (appliedPromo) {
-    promoMessage.style.color = "red";
-    promoMessage.textContent = "Promo sudah digunakan.";
+    msg.style.color = "red";
+    msg.textContent = "Promo sudah digunakan.";
     return;
   }
 
   if (promoList[code]) {
-    let promo = promoList[code];
+    const promo = promoList[code];
     appliedPromo = { code, ...promo };
     currentDiscount = promo.value;
-
-    promoMessage.style.color = "green";
-    promoMessage.textContent = `Promo ${code} berhasil diterapkan! Diskon ${promo.value}%`;
-
+    msg.style.color = "green";
+    msg.textContent = `Promo ${code} berhasil! Diskon ${promo.value}%`;
+    saveCartToLocalStorage();
     updateCartDisplay();
   } else if (code) {
-    promoMessage.style.color = "red";
-    promoMessage.textContent = "Kode promo tidak valid.";
+    msg.style.color = "red";
+    msg.textContent = "Kode promo tidak valid.";
   }
-
-  promoCodeInput.value = '';
 }
 
 // ================================
-// WHATSAPP CHECKOUT (DENGAN CLEAR LOCALSTORAGE)
+// WHATSAPP & CHECKOUT
 // ================================
 function sendToWhatsApp() {
-  const customerName = document.getElementById('customerName');
-  const customerEmail = document.getElementById('customerEmail');
-  
-  if (!customerName || !customerEmail) return;
-  
-  const name = customerName.value.trim();
-  const email = customerEmail.value.trim();
-
+  const name = document.getElementById('customerName')?.value.trim();
+  const email = document.getElementById('customerEmail')?.value.trim();
   if (!name || !email) {
     alert('Please fill in your name and email');
     return;
   }
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     alert('Please enter a valid email address');
     return;
   }
@@ -2174,129 +2200,247 @@ function sendToWhatsApp() {
   const subtotal = cart.reduce((sum, item) => sum + ((item.finalPrice || item.price) * item.quantity), 0);
   const total = subtotal - (subtotal * currentDiscount / 100);
 
-  let message = `*Sneakrun Store Order*\n\n`;
+  let message = `*Sneakrun Store Order*\n`;
   message += `Customer: ${name}\n`;
-  message += `Email: ${email}\n\n`;
+  message += `Email: ${email}\n`;
   message += `*ORDER DETAILS:*\n`;
-  
   cart.forEach(item => {
-    const itemPrice = item.finalPrice || item.price;
-    message += `• ${item.name}\n  Qty: ${item.quantity} x Rp ${itemPrice.toLocaleString('id-ID')}\n  Subtotal: Rp ${(itemPrice * item.quantity).toLocaleString('id-ID')}\n\n`;
+    const price = item.finalPrice || item.price;
+    const sizeText = item.size ? ` (Size: ${item.size})` : '';
+    message += `• ${item.name}${sizeText}\n`;
+    message += `  Qty: ${item.quantity} x Rp ${price.toLocaleString('id-ID')}\n`;
+    message += `  Subtotal: Rp ${(price * item.quantity).toLocaleString('id-ID')}\n`;
   });
-
   if (currentDiscount > 0) {
     message += `Subtotal: Rp ${subtotal.toLocaleString('id-ID')}\n`;
     message += `Discount (${currentDiscount}%): -Rp ${(subtotal * currentDiscount / 100).toLocaleString('id-ID')}\n`;
   }
-
-  message += `*TOTAL: Rp ${total.toLocaleString('id-ID')}*\n\n`;
+  message += `*TOTAL: Rp ${total.toLocaleString('id-ID')}*\n`;
   message += `Thank you for your order!`;
 
-  const whatsappNumber = '082382052250';
-  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-  
-  window.open(whatsappURL, '_blank');
+  window.open(`https://wa.me/082382052250?text=${encodeURIComponent(message)}`, '_blank');
 
+  // Clear after 1 sec
   setTimeout(() => {
     cart = [];
     appliedPromo = null;
     currentDiscount = 0;
-    
-    clearCartFromLocalStorage(); // HAPUS DARI LOCALSTORAGE
-    
+    clearCartFromLocalStorage();
     updateCartDisplay();
     toggleCart();
-    customerName.value = '';
-    customerEmail.value = '';
-    const promoMessage = document.getElementById('promoMessage');
-    if (promoMessage) promoMessage.textContent = '';
+    document.getElementById('customerName').value = '';
+    document.getElementById('customerEmail').value = '';
+    document.getElementById('promoMessage').textContent = '';
   }, 1000);
 }
 
 // ================================
-// NOTIFICATION
+// PRODUCT DETAILS MODAL
 // ================================
-function showNotification(message) {
-  const notification = document.createElement('div');
-  notification.textContent = message;
-  notification.style.cssText = `
-    position: fixed;
-    top: 80px;
-    right: 20px;
-    background: #4CAF50;
-    color: white;
-    padding: 15px 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    z-index: 10000;
-    animation: slideIn 0.3s ease-out;
+let currentSlideIndex = 0;
+let totalSlides = 0;
+
+function showProductDetails(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+
+  const modal = document.getElementById('productDetailsModal');
+  const title = document.getElementById('detailsTitle');
+  const price = document.getElementById('detailsPrice');
+  const desc = document.getElementById('detailsDescription');
+  const slider = document.getElementById('detailsImageSlider');
+  const dots = document.getElementById('sliderDots');
+  const btn = document.getElementById('detailsAddToCartBtn');
+
+  if (title) title.textContent = product.name;
+
+  const isDiscount = isDiscountActive && discountProducts.includes(productId);
+  const finalPrice = isDiscount ? Math.round(product.price * (1 - discountRate / 100)) : product.price;
+
+  if (price) {
+    price.innerHTML = isDiscount
+      ? `<s style="color:#999;font-size:20px;">Rp ${product.price.toLocaleString('id-ID')}</s><br>Rp ${finalPrice.toLocaleString('id-ID')}`
+      : `Rp ${product.price.toLocaleString('id-ID')}`;
+  }
+
+  if (desc) desc.textContent = product.description;
+
+  // Images
+  const images = product.images || [product.image];
+  totalSlides = images.length;
+  currentSlideIndex = 0;
+
+  if (slider) {
+    slider.innerHTML = images.map((src, i) => 
+      `<img src="${src}" alt="${product.name}" class="${i === 0 ? 'active' : ''}">`
+    ).join('');
+  }
+
+  if (dots) {
+    dots.innerHTML = images.map((_, i) => 
+      `<div class="slider-dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></div>`
+    ).join('');
+  }
+
+  updateSliderDisplay();
+
+  if (btn) {
+    btn.onclick = () => {
+      addToCart(productId);
+      closeProductDetails();
+    };
+  }
+
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeProductDetails() {
+  const modal = document.getElementById('productDetailsModal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+function changeSlide(dir) {
+  currentSlideIndex = (currentSlideIndex + dir + totalSlides) % totalSlides;
+  updateSliderDisplay();
+}
+
+function goToSlide(index) {
+  currentSlideIndex = index;
+  updateSliderDisplay();
+}
+
+function updateSliderDisplay() {
+  const imgs = document.querySelectorAll('#detailsImageSlider img');
+  const counter = document.getElementById('imageCounter');
+  const prev = document.getElementById('sliderPrevBtn');
+  const next = document.getElementById('sliderNextBtn');
+  const dots = document.querySelectorAll('.slider-dot');
+
+  imgs.forEach((img, i) => img.classList.toggle('active', i === currentSlideIndex));
+  dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlideIndex));
+
+  if (counter) counter.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
+  if (prev && next) {
+    if (totalSlides <= 1) {
+      prev.style.display = 'none';
+      next.style.display = 'none';
+    } else {
+      prev.style.display = 'flex';
+      next.style.display = 'flex';
+    }
+  }
+}
+
+// ================================
+// SEARCH & UI
+// ================================
+function searchKeychain() {
+  const query = document.getElementById('searchInput')?.value.toLowerCase() || '';
+  const cards = document.querySelectorAll('.product-card');
+  const clear = document.getElementById('searchClear');
+  const noRes = document.getElementById('noResults');
+
+  let found = false;
+  cards.forEach(card => {
+    const name = card.getAttribute('data-name');
+    const visible = name?.includes(query);
+    card.classList.toggle('hidden', !visible);
+    if (visible) found = true;
+  });
+
+  if (clear) clear.style.display = query ? 'block' : 'none';
+  if (noRes) noRes.style.display = query && !found ? 'block' : 'none';
+}
+
+function clearSearch() {
+  const inp = document.getElementById('searchInput');
+  if (inp) inp.value = '';
+  searchKeychain();
+}
+
+function toggleCart() {
+  const cartSection = document.getElementById('cartSection');
+  if (!cartSection) return;
+
+  const isOpen = cartSection.style.display === 'block';
+  cartSection.style.display = isOpen ? 'none' : 'block';
+  document.body.style.overflow = isOpen ? 'auto' : 'hidden';
+}
+
+function scrollToProducts() {
+  const firstSection = document.querySelector('.section');
+  if (firstSection) {
+    window.scrollTo({ top: firstSection.offsetTop - 20, behavior: 'smooth' });
+  }
+}
+
+function showNotification(msg) {
+  const notif = document.createElement('div');
+  notif.textContent = msg;
+  notif.style.cssText = `
+    position: fixed; top: 80px; right: 20px; background: #4CAF50; color: white;
+    padding: 15px 25px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 10000; animation: slideIn 0.3s ease-out;
   `;
-  
-  document.body.appendChild(notification);
-  
+  document.body.appendChild(notif);
   setTimeout(() => {
-    notification.style.animation = 'slideOut 0.3s ease-in';
-    setTimeout(() => notification.remove(), 300);
+    notif.style.animation = 'slideOut 0.3s ease-in';
+    setTimeout(() => notif.remove(), 300);
   }, 2000);
 }
 
 // ================================
-// SCROLL TO PRODUCTS
+// KEYBOARD SUPPORT
 // ================================
-function scrollToProducts() {
-  const section = document.querySelector('.section');
-  if (section) {
-    const offsetTop = section.offsetTop - 20; // 20px dari atas (bisa disesuaikan)
-    window.scrollTo({
-      top: offsetTop,
-      behavior: 'smooth'
-    });
+document.addEventListener('keydown', (e) => {
+  // Size modal
+  const sizeModal = document.getElementById('sizeModal');
+  if (sizeModal?.classList.contains('active')) {
+    if (e.key === 'Escape') closeSizeModal();
+    else if (e.key === 'Enter' && selectedSize) confirmSizeSelection();
   }
-}
+
+  // Product modal
+  const prodModal = document.getElementById('productDetailsModal');
+  if (prodModal?.classList.contains('active')) {
+    if (e.key === 'ArrowLeft') changeSlide(-1);
+    else if (e.key === 'ArrowRight') changeSlide(1);
+    else if (e.key === 'Escape') closeProductDetails();
+  }
+
+  // Promo
+  const promoInput = document.getElementById('promoCode');
+  if (promoInput === document.activeElement && e.key === 'Enter') {
+    e.preventDefault();
+    applyPromo();
+  }
+});
 
 // ================================
-// INITIALIZE
+// INIT
 // ================================
-document.addEventListener('DOMContentLoaded', function() {
-  // LOAD CART DARI LOCALSTORAGE
+document.addEventListener('DOMContentLoaded', () => {
   loadCartFromLocalStorage();
-  
   loadProducts();
   loadDiscountProducts();
-  updateCartDisplay(); // Update display setelah load dari localStorage
+  updateCartDisplay();
   updateCountdown();
-  
   timer = setInterval(updateCountdown, 1000);
-  
+
   const cartSection = document.getElementById('cartSection');
   if (cartSection) {
-    cartSection.addEventListener('click', function(e) {
-      if (e.target === cartSection) {
-        toggleCart();
-      }
-    });
-  }
-  
-  const promoCodeInput = document.getElementById("promoCode");
-  if (promoCodeInput) {
-    promoCodeInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        applyPromo();
-      }
+    cartSection.addEventListener('click', e => {
+      if (e.target === cartSection) toggleCart();
     });
   }
 });
 
-// ================================
-// CLEANUP ON PAGE UNLOAD
-// ================================
-window.addEventListener('beforeunload', function() {
-  if (timer) {
-    clearInterval(timer);
-  }
-});
-  </script>
+</script>
 </body>
 </html>
-
-
