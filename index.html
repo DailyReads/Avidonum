@@ -1479,6 +1479,14 @@ footer p {
       color: #222;
       margin-right: 8px;
     }
+    .specs-container {
+  margin-top: 20px;
+}
+.specs-container ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
   </style>
 </head>
 <body>
@@ -1588,13 +1596,7 @@ footer p {
         <div class="product-description-details" id="detailsDescription">
           Product description will appear here.
         </div>
-      <ul class="specs-list">
-        <li><strong>Material:</strong> Mesh breathable + Synthetic overlay</li>
-        <li><strong>Sole:</strong> Rubber outsole dengan pola traksi multidirectional</li>
-        <li><strong>Weight:</strong> 240g (per shoe, size 42)</li>
-        <li><strong>Drop:</strong> 8mm heel-to-toe offset</li>
-      </ul>
-
+      <div id="detailsSpecs" class="specs-container"></div>
         <button class="add-to-cart-details-btn" id="detailsAddToCartBtn">Add to Cart</button>
       </div>
     </div>
@@ -1715,18 +1717,22 @@ footer p {
 // ================================
 const products = [
   { 
-    id: 1, 
-    name: "Hyperglide 3.1", 
-    price: 750000, 
-    image: "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_1.jpg",
-    images: [
-      "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_1.jpg",
-      "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_2.jpg",
-      "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_5.jpg"
-    ],
-    sizes: [38, 39, 40, 41, 42, 43, 44, 45],
-    description: "Sepatu sneakers premium dengan desain terinspirasi dari novel Laskar Pelangi. Material upper berkualitas tinggi dengan cushioning yang nyaman untuk aktivitas sehari-hari. Outsole karet anti-slip memberikan traksi maksimal. Cocok untuk gaya kasual maupun semi-formal."
-  },
+  id: 1, 
+  name: "Hyperglide 3.1", 
+  price: 750000, 
+  image: "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_1.jpg",
+  images: [
+    "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_1.jpg",
+    "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_2.jpg",
+    "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_5.jpg"
+  ],
+  sizes: [38, 39, 40, 41, 42, 43, 44, 45],
+  description: "Hyperglide 3.1 adalah sepatu lari yang dirancang untuk menggabungkan kenyamanan dan performa, cocok untuk latihan harian dan balapan.",
+  specs: [
+    { label: "Weight", value: "240g per shoe (size 42)" },
+    { label: "Heel-to-Toe Drop", value: "8mm" },
+  ]
+},
   { 
     id: 2, 
     name: "Bumi Manusia", 
@@ -2274,6 +2280,22 @@ function showProductDetails(productId) {
   const slider = document.getElementById('detailsImageSlider');
   const dots = document.getElementById('sliderDots');
   const btn = document.getElementById('detailsAddToCartBtn');
+const specsContainer = document.getElementById('detailsSpecs');
+if (specsContainer) {
+  if (product.specs && product.specs.length > 0) {
+    specsContainer.innerHTML = `
+      <ul class="specs-list">
+        ${product.specs.map(spec => 
+          `<li><strong>${spec.label}:</strong> ${spec.value}</li>`
+        ).join('')}
+      </ul>
+    `;
+    specsContainer.style.display = 'block';
+  } else {
+    specsContainer.innerHTML = '';
+    specsContainer.style.display = 'none';
+  }
+}
 
   if (title) title.textContent = product.name;
 
