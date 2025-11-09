@@ -1798,20 +1798,11 @@ const products = [
 ];
 
 // ================================
-// CONFIG DISKON & PROMO — HARGA TETAP (FIXED PRICE)
+// CONFIG DISKON & PROMO
 // ================================
-// ✅ HARGA TETAP PER PRODUK (bukan diskon %)
-const specialPrices = {
-  1: 700000, // Laskar Pelangi → Rp700.000
-  2: 700000, // Bumi Manusia → Rp700.000
-  5: 700000  // LP Summary → Rp700.000
-};
-
-// ⚠️ Hapus atau nonaktifkan:
-// const discountRate = 20;
-// const discountProducts = [1, 2, 5];
-let isDiscountActive = true; // tetap bisa dipakai untuk nyalakan/matiin promo
-
+const discountRate = 15;
+const discountProducts = [1, 2, 5]; // ID produk diskon
+let isDiscountActive = true;
 const promoList = {
   "DISKON20": { type: "percent", value: 20 },
   "GAG123": { type: "percent", value: 5 }
@@ -2452,6 +2443,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
 
 
