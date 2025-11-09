@@ -2154,7 +2154,12 @@ function updateQuantity(productId, change, size = null) {
   saveCartToLocalStorage();
   updateCartDisplay();
 }
-
+cart.push({
+  ...product,
+  quantity: 1,
+  finalPrice,
+  size: null  // ← pastikan ini null, bukan undefined
+});
 // ================================
 // LOCALSTORAGE
 // ================================
@@ -2489,4 +2494,5 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
