@@ -2092,25 +2092,24 @@ function updateCartDisplay() {
   const cartItems = document.getElementById('cartItems');
   const totalAmount = document.getElementById('totalAmount');
   const checkoutBtn = document.getElementById('checkoutBtn');
-
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = cart.reduce((sum, item) => sum + ((item.finalPrice || item.price) * item.quantity), 0);
   const total = subtotal - (subtotal * currentDiscount / 100);
 
-  // Cart badge
+  // Update cart badge
   if (cartCount) {
     cartCount.textContent = totalItems;
     cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
   }
 
-  // Items display
+  // Render items or empty state
   if (cartItems) {
     if (cart.length === 0) {
       cartItems.innerHTML = `
         <div class="empty-cart">
           <div class="empty-cart-icon">🛒</div>
           <h3>Your cart is empty</h3>
-          <p>Add some books to get started!</p>
+          <p>Add some shoes to get started!</p>
           <button class="continue-shopping" onclick="toggleCart()">Continue Shopping</button>
         </div>
       `;
@@ -2118,17 +2117,21 @@ function updateCartDisplay() {
     } else {
       cartItems.innerHTML = cart.map(item => {
         const itemPrice = item.finalPrice || item.price;
-        const sizeText = item.size ? `<div style="font-size:13px;color:#666;margin-top:3px;">Size: ${item.size}</div>` : '';
+        const sizeText = item.size != null ? `<div style="font-size:13px;color:#666;margin-top:3px;">Size: ${item.size}</div>` : '';
+        
+        // ✅ Perbaikan utama: definisikan sizeValue dengan aman
+        const sizeValue = item.size == null ? 'null' : `'${item.size}'`;
+
         return `
           <div class="receipt-item">
             <img src="${item.image}" alt="${item.name}" class="item-image">
             <div class="item-info">
               <div class="item-name">${item.name}${sizeText}</div>
               <div class="item-controls">
-<button class="qty-btn" onclick="updateQuantity(${item.id}, -1, ${sizeParam})">-</button>
-<span class="quantity">${item.quantity}</span>
-<button class="qty-btn" onclick="updateQuantity(${item.id}, 1, ${sizeParam})">+</button>
-                 </div>
+                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1, ${sizeValue})">-</button>
+                <span class="quantity">${item.quantity}</span>
+                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1, ${sizeValue})">+</button>
+              </div>
             </div>
             <div class="item-price">Rp ${(itemPrice * item.quantity).toLocaleString('id-ID')}</div>
           </div>
@@ -2142,8 +2145,7 @@ function updateCartDisplay() {
     totalAmount.textContent = `Rp ${total.toLocaleString('id-ID')}`;
   }
 }
-
-function updateQuantity(productId, change, size = null) {
+  function updateQuantity(productId, change, size = null) {
   const item = cart.find(i => i.id === productId && (size === null || i.size === size));
   if (item) {
     item.quantity += change;
@@ -2153,13 +2155,7 @@ function updateQuantity(productId, change, size = null) {
   }
   saveCartToLocalStorage();
   updateCartDisplay();
-}
-cart.push({
-  ...product,
-  quantity: 1,
-  finalPrice,
-  size: null  // ← pastikan ini null, bukan undefined
-});
+  }
 // ================================
 // LOCALSTORAGE
 // ================================
@@ -2494,5 +2490,6 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
 
