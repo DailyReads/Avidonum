@@ -1936,21 +1936,27 @@ function loadDiscountProducts() {
 }
 
 // ================================
+// GLOBAL STATE
+// ================================
+let cart = [];
+let currentDiscount = 0;
+let appliedPromo = null;
+let selectedSize = null;
+let currentProductForSize = null;
+
+// ================================
 // SIZE MODAL
 // ================================
 function showSizeModal(productId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
-
   // Jika produk tidak punya size, langsung add
   if (!product.sizes || product.sizes.length === 0) {
     addToCartDirectly(productId);
     return;
   }
-
   currentProductForSize = product;
   selectedSize = null;
-
   const modal = document.getElementById('sizeModal');
   const img = document.getElementById('sizeProductImage');
   const name = document.getElementById('sizeProductName');
@@ -1958,10 +1964,8 @@ function showSizeModal(productId) {
   const opts = document.getElementById('sizeOptions');
   const btn = document.getElementById('sizeConfirmBtn');
   const err = document.getElementById('sizeErrorMessage');
-
   if (img) img.src = product.image;
   if (name) name.textContent = product.name;
-
   const isDiscount = isDiscountActive && discountProducts.includes(productId);
   const finalPrice = isDiscount ? Math.round(product.price * (1 - discountRate / 100)) : product.price;
   if (price) {
@@ -1969,8 +1973,7 @@ function showSizeModal(productId) {
       ? `<s style="color:#999;font-size:14px;">Rp ${product.price.toLocaleString('id-ID')}</s><br>Rp ${finalPrice.toLocaleString('id-ID')}`
       : `Rp ${product.price.toLocaleString('id-ID')}`;
   }
-
-  // ✅ Buat size options dengan event listener DOM-based (lebih aman)
+  // Render size options dengan event listener aman
   if (opts) {
     opts.innerHTML = '';
     product.sizes.forEach(size => {
@@ -1981,27 +1984,24 @@ function showSizeModal(productId) {
       opts.appendChild(el);
     });
   }
-
   if (btn) {
     btn.disabled = true;
     btn.onclick = confirmSizeSelection;
   }
   if (err) err.style.display = 'none';
-
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
 
 function selectSize(size) {
   selectedSize = size;
-
-  // UI update: highlight selected
+  // Hapus highlight sebelumnya
   document.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected'));
+  // Highlight yang dipilih
   const selectedEl = Array.from(document.querySelectorAll('.size-option'))
     .find(el => el.textContent.trim() === size.toString());
   if (selectedEl) selectedEl.classList.add('selected');
-
-  // Enable button & hide error
+  // Aktifkan tombol
   const btn = document.getElementById('sizeConfirmBtn');
   const err = document.getElementById('sizeErrorMessage');
   if (btn) btn.disabled = false;
@@ -2031,18 +2031,17 @@ function closeSizeModal() {
   currentProductForSize = null;
 }
 
-// ✅ FUNGSI UTAMA: Dipanggil dari tombol "Add to Cart"
+// Fungsi utama dipanggil dari tombol "Add to Cart"
 function addToCart(productId) {
-  showSizeModal(productId); // ✅ ini satu-satunya versi yang dipakai
+  showSizeModal(productId);
 }
 
-// Jika produk tanpa size
+// Produk tanpa size
 function addToCartDirectly(productId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
   const isDiscount = isDiscountActive && discountProducts.includes(productId);
   const finalPrice = isDiscount ? Math.round(product.price * (1 - discountRate / 100)) : product.price;
-
   const existingItem = cart.find(item => item.id === productId && item.size == null);
   if (existingItem) {
     existingItem.quantity += 1;
@@ -2054,19 +2053,17 @@ function addToCartDirectly(productId) {
       size: null
     });
   }
-
   saveCartToLocalStorage();
   updateCartDisplay();
   showNotification(`${product.name} added to cart!`);
 }
 
-// Dengan size
+// Produk dengan size
 function addToCartWithSize(productId, size) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
   const isDiscount = isDiscountActive && discountProducts.includes(productId);
   const finalPrice = isDiscount ? Math.round(product.price * (1 - discountRate / 100)) : product.price;
-
   const existingItem = cart.find(item => item.id === productId && item.size === size);
   if (existingItem) {
     existingItem.quantity += 1;
@@ -2078,11 +2075,12 @@ function addToCartWithSize(productId, size) {
       size
     });
   }
-
   saveCartToLocalStorage();
   updateCartDisplay();
   showNotification(`${product.name} (Size ${size}) added to cart!`);
 }
+
+
 
 // ================================
 // CART DISPLAY & UPDATE
@@ -2490,6 +2488,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
 
 
