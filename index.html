@@ -359,9 +359,11 @@ header {
 
 .product-card img { 
   width: 100%; 
-  height: 180px; 
-  object-fit: cover; 
+  aspect-ratio: 1 / 1;        /* atau 4 / 3, 3 / 4, dsb — sesuaikan rasio produk */
+  object-fit: contain;
+  object-position: center;
   border-radius: 10px; 
+  background-color: #f8f9fa;
 }
 
 .product-name { 
