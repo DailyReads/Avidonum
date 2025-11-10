@@ -1885,12 +1885,12 @@ function hideDiscountDisplay() {
 function loadProducts() {
   const grid = document.getElementById('productGrid');
   if (!grid) return;
-
   grid.innerHTML = products.map(product => {
     const isDiscount = isDiscountActive && discountProducts.includes(product.id);
     const finalPrice = isDiscount ? Math.round(product.price * (1 - discountRate / 100)) : product.price;
     return `
-      <div class="product-card" data-name="${product.name.toLowerCase()}">
+      <div class="product-card" data-name="${product.name.toLowerCase()}" 
+           onclick="showProductDetails(${product.id})">
         <img src="${product.image}" alt="${product.name}" loading="lazy">
         <div class="product-name">${product.name}</div>
         <div class="product-price">
@@ -1901,10 +1901,6 @@ function loadProducts() {
           }
         </div>
         ${isDiscount ? `<span class="product-badge">Promo</span>` : ''}
-        <div class="product-actions">
-          <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
-          <button class="details-btn-product" onclick="showProductDetails(${product.id})">View Details</button>
-        </div>
       </div>
     `;
   }).join('');
@@ -1920,15 +1916,15 @@ function loadDiscountProducts() {
   grid.innerHTML = filtered.map(product => {
     const discountPrice = Math.round(product.price * (1 - discountRate / 100));
     return `
-      <div class="product-card" data-name="${product.name.toLowerCase()}">
-        <img src="${product.image}" alt="${product.name}">
+      <div class="product-card" data-name="${product.name.toLowerCase()}" 
+           onclick="showProductDetails(${product.id})">
+        <img src="${product.image}" alt="${product.name}" loading="lazy">
         <div class="product-name">${product.name}</div>
         <div class="product-price">
           <s>Rp ${product.price.toLocaleString('id-ID')}</s> 
           <strong>Rp ${discountPrice.toLocaleString('id-ID')}</strong>
         </div>
         <span class="product-badge">Promo</span>
-        <button class="add-btn" onclick="addToCart(${product.id})">Add to Cart</button>
       </div>
     `;
   }).join('');
@@ -2491,4 +2487,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-
