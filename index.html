@@ -1515,7 +1515,7 @@ footer p {
             <h1>Welcome to Sneakrun</h1>
             <p>Maximum looks and maximum speed— that’s Sneakrun.</p>
 <div class="countdown-box">
-  <div class="countdown-title">🎉 Discount 20%</div>
+  <div class="countdown-title">🎉 Discount 10%</div>
   <div id="countdown" class="countdown">
     <div class="time-box">
       <span id="days">00</span>
@@ -1741,7 +1741,7 @@ const products = [
   { 
     id: 2, 
     name: "Novablast 5", 
-    price: 2099000, 
+    price: 2050000, 
     image: "https://thumbor.sirclocdn.com/unsafe/960x1120/filters:format(webp):quality(80)/https://bo.asics.co.id/media/catalog/product/cache/5851c493ecee7427253955673b4ab287/1/0/1011b974.404_1.jpg",
     images: [
       "https://thumbor.sirclocdn.com/unsafe/960x1120/filters:format(webp):quality(80)/https://bo.asics.co.id/media/catalog/product/cache/5851c493ecee7427253955673b4ab287/1/0/1011b974.404_1.jpg",
@@ -1750,6 +1750,11 @@ const products = [
     ],
     sizes: [36, 37, 38, 39, 40, 41, 42, 43],
     description: "Novablast 5 adalah sepatu lari ringan yang dirancang untuk latihan sehari-hari, dilengkapi bantalan FF BLAST™ MAX untuk pendaratan yang lebih lembut dan gerakan toe-off yang lebih energik."
+    specs: [
+  { label: "Pace", value: "Daily Running" },
+    { label: "Weight Brand", value: "255g per shoe (size 42)" },
+    { label: "Drop Brand", value: "8mm" },
+  ]
   },
   { 
     id: 3, 
@@ -1834,7 +1839,7 @@ const products = [
 // ================================
 // CONFIG DISKON & PROMO
 // ================================
-const discountRate = 15;
+const discountRate = 10;
 const discountProducts = [1, 3, 5]; // ID produk diskon
 let isDiscountActive = true;
 const promoList = {
@@ -2492,4 +2497,5 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
