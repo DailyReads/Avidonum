@@ -2110,13 +2110,13 @@ function updateCartDisplay() {
         <div class="empty-cart">
           <div class="empty-cart-icon">🛒</div>
           <h3>Your cart is empty</h3>
-          <p>Add some books to get started!</p>
+          <p>Add some shoes to get started!</p>
           <button class="continue-shopping" onclick="toggleCart()">Continue Shopping</button>
         </div>
       `;
       if (checkoutBtn) checkoutBtn.disabled = true;
     } else {
-      cartItems.innerHTML = cart.map(item => {
+      cartItems.innerHTML = cart.map((item, index) => {
         const itemPrice = item.finalPrice || item.price;
         const sizeText = item.size ? `<div style="font-size:13px;color:#666;margin-top:3px;">Size: ${item.size}</div>` : '';
         return `
@@ -2125,9 +2125,9 @@ function updateCartDisplay() {
             <div class="item-info">
               <div class="item-name">${item.name}${sizeText}</div>
               <div class="item-controls">
-                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1, ${item.size === null ? 'null' : `'${item.size}'`})">-</button>
+                <button class="qty-btn" onclick="updateQuantity(${index}, -1)">-</button>
                 <span class="quantity">${item.quantity}</span>
-                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1, ${item.size === null ? 'null' : `'${item.size}'`})">+</button>
+                <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
               </div>
             </div>
             <div class="item-price">Rp ${(itemPrice * item.quantity).toLocaleString('id-ID')}</div>
@@ -2143,14 +2143,18 @@ function updateCartDisplay() {
   }
 }
 
-function updateQuantity(productId, change, size = null) {
-  const item = cart.find(i => i.id === productId && (size === null || i.size === size));
-  if (item) {
-    item.quantity += change;
-    if (item.quantity <= 0) {
-      cart = cart.filter(i => !(i.id === productId && (size === null || i.size === size)));
-    }
+function updateQuantity(cartIndex, change) {
+  // Validasi index
+  if (cartIndex < 0 || cartIndex >= cart.length) return;
+  
+  const item = cart[cartIndex];
+  item.quantity += change;
+  
+  // Hapus item jika quantity <= 0
+  if (item.quantity <= 0) {
+    cart.splice(cartIndex, 1);
   }
+  
   saveCartToLocalStorage();
   updateCartDisplay();
 }
@@ -2179,7 +2183,6 @@ function clearCartFromLocalStorage() {
   localStorage.removeItem('literadiaPromo');
   localStorage.removeItem('literadiaDiscount');
 }
-
 // ================================
 // PROMO
 // ================================
