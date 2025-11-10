@@ -1515,7 +1515,7 @@ footer p {
             <h1>Welcome to Sneakrun</h1>
             <p>Maximum looks and maximum speed— that’s Sneakrun.</p>
 <div class="countdown-box">
-  <div class="countdown-title">🎉 Discount 20%</div>
+  <div class="countdown-title">🎉 Discount 10%</div>
   <div id="countdown" class="countdown">
     <div class="time-box">
       <span id="days">00</span>
@@ -1695,6 +1695,7 @@ footer p {
       </div>
 
       <div class="receipt-items" id="cartItems">
+
         <div class="empty-cart">
           <div class="empty-cart-icon">🛒</div>
           <h3>Your cart is empty</h3>
@@ -1722,22 +1723,22 @@ footer p {
 // ================================
 const products = [
   { 
-  id: 1, 
-  name: "Hyperglide 3.1", 
-  price: 750000, 
-  image: "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_1.jpg",
-  images: [
-    "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_1.jpg",
-    "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_2.jpg",
-    "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_5.jpg"
-  ],
-  sizes: [38, 39, 40, 41, 42, 43, 44, 45],
-  description: "Hyperglide 3.1 adalah sepatu lari yang dirancang untuk menggabungkan kenyamanan dan performa, cocok untuk latihan harian dan balapan.",
-  specs: [
-    { label: "Weight", value: "240g per shoe (size 42)" },
-    { label: "Heel-to-Toe Drop", value: "8mm" },
-  ]
-},
+    id: 1, 
+    name: "Hyperglide 3.1", 
+    price: 750000, 
+    image: "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_1.jpg",
+    images: [
+      "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_1.jpg",
+      "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_2.jpg",
+      "11040135_HYPERGLIDE_3_1_-_LIGHT_GREY_ORTRANGEArtboard_5.jpg"
+    ],
+    sizes: [38, 39, 40, 41, 42, 43, 44, 45],
+    description: "Hyperglide 3.1 adalah sepatu lari yang dirancang untuk menggabungkan kenyamanan dan performa, cocok untuk latihan harian dan balapan.",
+    specs: [
+      { label: "Weight", value: "240g per shoe (size 42)" },
+      { label: "Heel-to-Toe Drop", value: "8mm" }
+    ]
+  },
   { 
     id: 2, 
     name: "Novablast 5", 
@@ -1749,12 +1750,12 @@ const products = [
       "https://thumbor.sirclocdn.com/unsafe/960x1120/filters:format(webp):quality(80)/https://bo.asics.co.id/media/catalog/product/cache/5851c493ecee7427253955673b4ab287/1/0/1011b974.404_8.jpg"
     ],
     sizes: [36, 37, 38, 39, 40, 41, 42, 43],
-    description: "Novablast 5 adalah sepatu lari ringan yang dirancang untuk latihan sehari-hari, dilengkapi bantalan FF BLAST™ MAX untuk pendaratan yang lebih lembut dan gerakan toe-off yang lebih energik."
+    description: "Novablast 5 adalah sepatu lari ringan yang dirancang untuk latihan sehari-hari, dilengkapi bantalan FF BLAST™ MAX untuk pendaratan yang lebih lembut dan gerakan toe-off yang lebih energik.",
     specs: [
-  { label: "Pace", value: "Daily Running" },
-    { label: "Weight Brand", value: "255g per shoe (size 42)" },
-    { label: "Drop Brand", value: "8mm" },
-  ]
+      { label: "Pace", value: "Daily Running" },
+      { label: "Weight Brand", value: "255g per shoe (size 42)" },
+      { label: "Drop Brand", value: "8mm" }
+    ]
   },
   { 
     id: 3, 
@@ -1766,7 +1767,8 @@ const products = [
       "https://via.placeholder.com/460x360/FFD93D/FFFFFF?text=Perahu+Kertas+2"
     ],
     sizes: [37, 38, 39, 40, 41, 42],
-    description: "Sepatu casual dengan desain unik berbentuk perahu kertas yang playful namun tetap stylish. Material canvas breathable dengan insole empuk untuk kenyamanan maksimal. Lightweight dan flexible, cocok untuk aktivitas outdoor maupun hangout santai bersama teman."
+    description: "Sepatu casual dengan desain unik berbentuk perahu kertas yang playful namun tetap stylish. Material canvas breathable dengan insole empuk untuk kenyamanan maksimal. Lightweight dan flexible, cocok untuk aktivitas outdoor maupun hangout santai bersama teman.",
+    specs: []
   },
   { 
     id: 4, 
@@ -1779,7 +1781,8 @@ const products = [
       "https://via.placeholder.com/460x360/4D96FF/FFFFFF?text=Negeri+5+Menara+3"
     ],
     sizes: [38, 39, 40, 41, 42, 43, 44, 45],
-    description: "Sneakers eksklusif bertema Negeri 5 Menara dengan detail artistic yang memukau. Dilengkapi dengan midsole EVA yang empuk dan durable. Upper synthetic leather mudah dibersihkan. Desain timeless yang cocok untuk berbagai occasion, dari casual hingga semi-formal."
+    description: "Sneakers eksklusif bertema Negeri 5 Menara dengan detail artistic yang memukau. Dilengkapi dengan midsole EVA yang empuk dan durable. Upper synthetic leather mudah dibersihkan. Desain timeless yang cocok untuk berbagai occasion, dari casual hingga semi-formal.",
+    specs: []
   },
   { 
     id: 5, 
@@ -1792,7 +1795,8 @@ const products = [
       "https://via.placeholder.com/460x360/FF9AA2/FFFFFF?text=LP+Summary+3"
     ],
     sizes: [36, 37, 38, 39, 40, 41, 42],
-    description: "Versi budget-friendly dari Laskar Pelangi sneakers dengan desain minimalis namun tetap eye-catching. Material berkualitas dengan harga terjangkau. Canvas upper yang breathable dan nyaman dipakai seharian. Perfect starter sneakers untuk koleksi sepatu kamu!"
+    description: "Versi budget-friendly dari Laskar Pelangi sneakers dengan desain minimalis namun tetap eye-catching. Material berkualitas dengan harga terjangkau. Canvas upper yang breathable dan nyaman dipakai seharian. Perfect starter sneakers untuk koleksi sepatu kamu!",
+    specs: []
   },
   { 
     id: 6, 
@@ -1804,7 +1808,8 @@ const products = [
       "https://via.placeholder.com/460x360/E8DFF5/FFFFFF?text=BM+Summary+2"
     ],
     sizes: [37, 38, 39, 40, 41, 42, 43],
-    description: "Sepatu compact dengan tema Bumi Manusia dalam versi simplified. Desain simpel dan modern yang mudah di-mix and match dengan berbagai outfit. Rubber outsole yang grippy dan tahan lama. Ideal untuk daily use dengan budget yang ramah di kantong. Great value for money!"
+    description: "Sepatu compact dengan tema Bumi Manusia dalam versi simplified. Desain simpel dan modern yang mudah di-mix and match dengan berbagai outfit. Rubber outsole yang grippy dan tahan lama. Ideal untuk daily use dengan budget yang ramah di kantong. Great value for money!",
+    specs: []
   },
   { 
     id: 7, 
@@ -1817,7 +1822,8 @@ const products = [
       "https://via.placeholder.com/460x360/FEC8D8/FFFFFF?text=PK+Summary+3"
     ],
     sizes: [36, 37, 38, 39, 40, 41],
-    description: "Mini version dari Perahu Kertas sneakers dengan harga super affordable. Kualitas tetap terjaga dengan material yang awet dan tidak mudah pudar. Lightweight construction untuk kenyamanan maksimal. Cocok untuk pelajar dan mahasiswa yang ingin tampil stylish dengan budget terbatas."
+    description: "Mini version dari Perahu Kertas sneakers dengan harga super affordable. Kualitas tetap terjaga dengan material yang awet dan tidak mudah pudar. Lightweight construction untuk kenyamanan maksimal. Cocok untuk pelajar dan mahasiswa yang ingin tampil stylish dengan budget terbatas.",
+    specs: []
   },
   { 
     id: 8, 
@@ -1832,7 +1838,8 @@ const products = [
       "https://via.placeholder.com/460x360/FFDAB9/FFFFFF?text=N5M+Summary+5"
     ],
     sizes: [38, 39, 40, 41, 42, 43],
-    description: "Sepatu praktis dengan desain terinspirasi dari Negeri 5 Menara dalam versi ekonomis. Ringan, compact, dan stylish dengan color options yang beragam. Padded collar untuk ankle support yang lebih baik. Sempurna untuk koleksi atau sebagai hadiah budget-friendly tanpa mengorbankan style dan kenyamanan."
+    description: "Sepatu praktis dengan desain terinspirasi dari Negeri 5 Menara dalam versi ekonomis. Ringan, compact, dan stylish dengan color options yang beragam. Padded collar untuk ankle support yang lebih baik. Sempurna untuk koleksi atau sebagai hadiah budget-friendly tanpa mengorbankan style dan kenyamanan.",
+    specs: []
   }
 ];
 
@@ -2497,6 +2504,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
 
 
